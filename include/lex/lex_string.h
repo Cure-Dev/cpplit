@@ -1,4 +1,4 @@
-#include "lex/tokens.h"
+#include "lex/tokens.hpp"
 
 #ifndef _LEX_STRING_
 #define _LEX_STRING_

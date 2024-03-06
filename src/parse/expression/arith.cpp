@@ -1,6 +1,6 @@
 #include "parse/parser.hpp"
 #include "parse/nodes.hpp"
-#include "lex/tokens.h"
+#include "lex/tokens.hpp"
 
 expr* parse_multi_divis(const token_list& Token_list, int& index) {
 

@@ -1,7 +1,7 @@
 #include <map>
 #include <string>
 
-#include "lex/numcvt.h"
+#include "lex/numcvt.hpp"
 
 unsigned int cvt(std::map<wchar_t, int> cvt_map, int base, std::wstring src, int& i) {
 

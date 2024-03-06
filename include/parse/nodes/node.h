@@ -1,7 +1,7 @@
 #include <map>
 #include <string>
 
-#include "lex/tokens.h"
+#include "lex/tokens.hpp"
 
 #ifndef _NODE_H_
 #define _NODE_H_

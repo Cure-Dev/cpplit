@@ -1,4 +1,4 @@
-#include "lex/tokens.h"
+#include "lex/tokens.hpp"
 
 #ifndef _TOKENS_SYMBOL_H_
 #define _TOKENS_SYMBOL_H_

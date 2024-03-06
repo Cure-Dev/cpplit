@@ -1,10 +1,10 @@
 #include <set>
 
-#include "exceptions/lex.h"
+#include "exceptions/lex.hpp"
 
-#include "lex/lex_string.h"
-#include "lex/numcvt.h"
-#include "lex/tokens.h"
+#include "lex/lex_string.hpp"
+#include "lex/numcvt.hpp"
+#include "lex/tokens.hpp"
 
 std::set<wchar_t> head_set = {
 

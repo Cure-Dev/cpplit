@@ -7,25 +7,25 @@
 
 #include <locale>
 
-#include "exceptions/exception.h"
-#include "exceptions/fserrs.h"
+#include "exceptions/exception.hpp"
+#include "exceptions/fserrs.hpp"
 
-#include "exceptions/handler/lex.h"
+#include "exceptions/handler/lex.hpp"
 
-#include "reader/reader.h"
-#include "reader/encoding.h"
+#include "reader/reader.hpp"
+#include "reader/encoding.hpp"
 
-#include "lex/lexer.h"
-#include "exceptions/lex.h"
-#include "lex/tokens.h"
+#include "lex/lexer.hpp"
+#include "exceptions/lex.hpp"
+#include "lex/tokens.hpp"
 
 #include "parse/parser.hpp"
 #include "parse/nodes.hpp"
 
 #include "ansi.hpp"
 
-#include "semantic/class.h"
-#include "semantic/environment.h"
+#include "semantic/class.hpp"
+#include "semantic/environment.hpp"
 
 int main(int argc, char** args) {
 

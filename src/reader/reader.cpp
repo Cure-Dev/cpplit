@@ -4,9 +4,9 @@
 #include <codecvt>
 #include <locale>
 
-#include "exceptions/fserrs.h"
-#include "reader/encoding.h"
-#include "reader/reader.h"
+#include "exceptions/fserrs.hpp"
+#include "reader/encoding.hpp"
+#include "reader/reader.hpp"
 
 std::wstring utf8ToWstring(std::string utf8) {
     std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;

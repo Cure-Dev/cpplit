@@ -1,7 +1,7 @@
 #include <map>
 #include <string>
 
-#include "semantic/class.h"
+#include "semantic/class.hpp"
 
 #ifndef _SEMANTIC_ENVIRONMENT_H_
 #define _SEMANTIC_ENVIRONMENT_H_

@@ -1,5 +1,5 @@
 #include "parse/nodes.hpp"
-#include "lex/tokens.h"
+#include "lex/tokens.hpp"
 
 
 #ifndef _PARSER_H_

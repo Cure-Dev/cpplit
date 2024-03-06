@@ -1,4 +1,4 @@
-#include "reader/encoding.h"
+#include "reader/encoding.hpp"
 
 #ifndef _READER_H_
 #define _READER_H_

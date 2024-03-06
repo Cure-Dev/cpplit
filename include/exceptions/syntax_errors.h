@@ -1,4 +1,4 @@
-#include "exceptions/exception.h"
+#include "exceptions/exception.hpp"
 
 #ifndef _SYNTAX_ERRORS_H_
 #define _SYNTAX_ERRORS_H_

@@ -1,8 +1,8 @@
-#include "lex/tokens.h"
+#include "lex/tokens.hpp"
 #include "parse/nodes.hpp"
 
-#include "semantic/class.h"
-#include "semantic/environment.h"
+#include "semantic/class.hpp"
+#include "semantic/environment.hpp"
 
 #ifndef _STATEMENT_H_
 #define _STATEMENT_H_

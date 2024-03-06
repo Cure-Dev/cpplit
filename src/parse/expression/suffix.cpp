@@ -1,4 +1,4 @@
-#include "exceptions/syntax_errors.h"
+#include "exceptions/syntax_errors.hpp"
 
 #include "parse/parser.hpp"
 

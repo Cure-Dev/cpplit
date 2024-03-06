@@ -1,10 +1,10 @@
 #include <string>
 
-#include "lex/lexer.h"
-#include "lex/tokens.h"
-#include "lex/trie.h"
+#include "lex/lexer.hpp"
+#include "lex/tokens.hpp"
+#include "lex/trie.hpp"
 
-#include "exceptions/lex.h"
+#include "exceptions/lex.hpp"
 
 trie_node* symbol_tree = new trie_node(); // ！ new忘写了。。。
 

@@ -1,7 +1,7 @@
 #include "parse/nodes.hpp"
 #include "parse/parser.hpp"
 
-#include "exceptions/syntax_errors.h"
+#include "exceptions/syntax_errors.hpp"
 
 expr* parse_expr_keywords(const token_list& Token_list, int& index) {
 	token_keyword* kw = dynamic_cast<token_keyword*> (Token_list[index]);

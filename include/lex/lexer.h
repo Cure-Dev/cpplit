@@ -1,4 +1,4 @@
-#include "lex/tokens.h"
+#include "lex/tokens.hpp"
 #include <vector>
 
 #ifndef _LEXER_H_

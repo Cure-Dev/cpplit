@@ -1,5 +1,5 @@
-#include "semantic/class.h"
-#include "semantic/builtins.h"
+#include "semantic/class.hpp"
+#include "semantic/builtins.hpp"
 
 #ifndef _IMPORT_H_
 #define _IMPORT_H_

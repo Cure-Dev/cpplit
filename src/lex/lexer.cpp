@@ -1,9 +1,9 @@
-#include "lex/lexer.h"
-#include "lex/lex_string.h"
+#include "lex/lexer.hpp"
+#include "lex/lex_string.hpp"
 
-#include "lex/tokens.h"
-#include "lex/numcvt.h"
-#include "exceptions/lex.h"
+#include "lex/tokens.hpp"
+#include "lex/numcvt.hpp"
+#include "exceptions/lex.hpp"
 
 #include <string>
 #include <vector>

@@ -3,7 +3,7 @@
 #include <map>
 #include <sstream>
 
-#include "exceptions/exception.h"
+#include "exceptions/exception.hpp"
 
 #include "language/language.hpp"
 

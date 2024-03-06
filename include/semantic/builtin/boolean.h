@@ -1,4 +1,4 @@
-#include "semantic/class.h"
+#include "semantic/class.hpp"
 
 #ifndef _SEMANTIC_BUILTIN_BOOLEAN_H_
 #define _SEMANTIC_BUILTIN_BOOLEAN_H_

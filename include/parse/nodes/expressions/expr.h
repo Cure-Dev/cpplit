@@ -1,13 +1,13 @@
 #include <string>
 #include <vector>
 
-#include "lex/tokens.h"
+#include "lex/tokens.hpp"
 
-#include "parse/nodes/node.h"
+#include "parse/nodes/node.hpp"
 
-#include "semantic/class.h"
-#include "semantic/environment.h"
-#include "semantic/builtins.h"
+#include "semantic/class.hpp"
+#include "semantic/environment.hpp"
+#include "semantic/builtins.hpp"
 
 #ifndef _EXPR_H_
 #define _EXPR_H_

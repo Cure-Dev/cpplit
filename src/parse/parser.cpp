@@ -1,12 +1,12 @@
 #include <vector>
 #include <map>
 
-#include "lex/tokens.h"
+#include "lex/tokens.hpp"
 
 #include "parse/nodes.hpp"
 #include "parse/parser.hpp"
 
-#include "exceptions/syntax_errors.h"
+#include "exceptions/syntax_errors.hpp"
 
 expr_entity* make_entity(token_entity* Token) {
 	
