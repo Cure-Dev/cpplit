@@ -1,0 +1,74 @@
+[2024-1-21] #parse 完成四则运算理论实现
+[2024-1-22] #parse 添加 node_type 映射支持，转移到 nodes.h
+
+[2024-1-23 13:01] #parse parser 分级调用，支持解析前缀表达式
+
+[2024-1-26] #lex 重构lexer，实现trie tree，遵循符号的最长匹配原则
+坚定了两个道理：
+1. 绝对不可以把数字和字符建立自动转换关系。不小心把数字型的下标传，转成了wchar(fk还被坑了两次)
+2. 空指针不要留！用异常替代
+
+[2024-1-27] virtual 不可实例化！ code -11 是指针引用错误（空指针或指向vir）
+
+[2024-1-30] #err 'exit code -11': 空指针错误。指针声明'mycls* m'，此时m为NULL。
+			也有可能是throw时不是传的指针。catch无法catch子类。！？？ catch有时不终止？？？
+			warn 可以catch吗？分线程？
+
+[2024-2-10] #parser #hint exit code -11 是空指针错误。我先定义了一个expr* result，在接下来的子block中，copy中把 'result = ...' 写成 'expr* result'。最后返回的是空指针。！要特别注意，子块中可以覆盖declaration。
+expr::expr_view 是类成员吗？
+可否 child.method() + ''
+
+[2024-2-11] #parser parse priority:
+					
+					logic
+						OR
+						XOR
+						AND
+					
+					comparation
+					arith
+
+					- member access
+
+
+基本要求：
+学习<=结构体+文件结构
+
+1. I: string, O:exe or run
+2. 5 steps
+
+
+todo:
+去除分类
+完善错误系统
+
+git kraden
+assignment, keywords
+
+[2024-2-12] #parse complete 'import' parsing.
+
+func() {
+	extern(a)
+}
+namespace inhret
+
+`x033A
+'`x033a;'
+
+`x33.a time.s
+
+if not ()
+
+[2024-2-13] #parser 完成ifs、loop。loop-parse 是一次编译直接成功的。
+					优化exprs显示（view())
+
+[2024-2-14] #parser 优化blocks显示
+去除node_type & ->TYPE
+token_type::keyword & ->TYPE
+
+list<<base>> list<<sub>>
+
+函数参数重名
+constant
+
+child->method() + ''
