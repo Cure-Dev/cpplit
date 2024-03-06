@@ -6,6 +6,11 @@
 /bin
 /test
 
+/CMakeCache.txt
+/CMakeFiles
+/Makefile
+/cmake_install.cmake
+
 *.old
 *.old.cpp
 *.old.h
