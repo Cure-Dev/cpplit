@@ -7,32 +7,28 @@
 
 class semantic_node {
 public:
-	virtual ~semantic_node() {};
+	virtual semantic_node* get_member(std::wstring name) = 0;
 };
 
-class semantic_type : public semantic_node {
-/*public:
-	semantic_type(std::vector<semantic_type> inherits, std::map<std::wstring, semantic_type> members_type) : inherits(inherits), members_type(members_type) {};
-	std::vector<semantic_type> inherits;
-	std::map<std::wstring, semantic_type> members_type;*/
-};
+class semantic_method;
 
-class semantic_class : public semantic_type {
+class semantic_class : public semantic_node {
 public:
-	semantic_class(std::vector<semantic_class*> supers, std::map<std::wstring, semantic_node*> members) : supers(supers), members(members) {};
+	// semantic_class(std::vector<semantic_class*> supers, std::map<std::wstring, semantic_method*> members) : supers(supers), methods(members) {};
 	std::vector<semantic_class*> supers;
 
-	semantic_node* get_member(std::wstring name) {
+/*	semantic_node* get_member(std::wstring name) {
 		if (this->members.find(name) != this->members.end()) {
 			return this->members[name];
 		}
 		else {
 			throw "member not exists.";
 		}
-	}
+	}*/
 
-private:
-	std::map<std::wstring, semantic_node*> members;
+	// virtual semantic_method* get_method(std::wstring name) = 0;
+
+	std::map<std::wstring, semantic_method*> methods;
 };
 
 class semantic_object : public semantic_node {
@@ -49,17 +45,25 @@ private:
 
 
 
-static auto _builtin_class_tuple = new semantic_class { {}, {} };
+class _semantic_builtin_class_tuple : public semantic_class {
+public:
+	_semantic_builtin_class_tuple() {};
+	semantic_node* get_member(std::wstring name) {
+		throw "no member in tuple"; // init
+	}
+};
+
+static auto semantic_builtin_class_tuple = new _semantic_builtin_class_tuple {};
 
 class _builtin_object_tuple : public semantic_object {
 public:
-	_builtin_object_tuple(std::vector<semantic_object*> items) : semantic_object(_builtin_class_tuple, {}), items(items) {};
+	_builtin_object_tuple(std::vector<semantic_object*> items) : semantic_object(semantic_builtin_class_tuple, {}), items(items) {};
 	std::vector<semantic_object*> items;
 };
 
 
 
-class semantic_function : public semantic_type {
+class semantic_function : public semantic_node {
 public:
 	semantic_function(semantic_class* type) : return_type(type) {};
 	semantic_class* return_type;
@@ -67,12 +71,14 @@ public:
 	virtual semantic_object* call(_builtin_object_tuple* arglist) {
 		return this->call(arglist);
 	}
+
+	semantic_node* get_member(std::wstring name) {
+	/*	if (name == L"call") {
+
+		}*/
+		return NULL;
+	}
 };
-
-
-
-static auto lit_null_base = new semantic_class { {}, {} };
-static auto lit_null = new semantic_object { { lit_null_base }, {} };
 
 
 

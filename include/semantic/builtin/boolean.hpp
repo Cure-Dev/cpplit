@@ -3,7 +3,16 @@
 #ifndef _SEMANTIC_BUILTIN_BOOLEAN_H_
 #define _SEMANTIC_BUILTIN_BOOLEAN_H_
 
-static auto semantic_builtin_class_boolean = new semantic_class { {}, {} };
+class _semantic_builtin_class_boolean : public semantic_class {
+public:
+	_semantic_builtin_class_boolean() {};
+
+	semantic_node* get_member(std::wstring name) {
+		throw "no member in boolean";
+	}
+};
+
+static auto semantic_builtin_class_boolean = new _semantic_builtin_class_boolean {};
 
 class semantic_builtin_object_boolean : public semantic_object {
 public:
