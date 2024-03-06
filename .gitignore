@@ -1,0 +1,10 @@
+/.sublime
+/.gitee
+/.github
+
+/build
+/bin
+
+*.old
+*.old.cpp
+*.old.h
