@@ -22,7 +22,7 @@
 #include "parse/parser.hpp"
 #include "parse/nodes.hpp"
 
-#include "ansi.h"
+#include "ansi.hpp"
 
 #include "semantic/class.h"
 #include "semantic/environment.h"
