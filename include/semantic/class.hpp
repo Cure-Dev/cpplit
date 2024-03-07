@@ -8,26 +8,30 @@
 class semantic_node {
 public:
 	virtual semantic_node* get_member(std::wstring name) = 0;
+	std::map<std::wstring, semantic_node*> members;
 };
 
 class semantic_method;
 
 class semantic_class : public semantic_node {
 public:
-	// semantic_class(std::vector<semantic_class*> supers, std::map<std::wstring, semantic_method*> members) : supers(supers), methods(members) {};
+/*	semantic_class(std::vector<semantic_class*> supers, semantic_function* constractor, std::map<std::wstring, semantic_method*> methods) : supers(supers), methods(methods) {
+		this->members[L"call"] = constractor;
+
+		for (auto super : supers) {
+			this->methods.merge(super->methods);
+		}
+	}*/
 	std::vector<semantic_class*> supers;
 
-/*	semantic_node* get_member(std::wstring name) {
+	semantic_node* get_member(std::wstring name) {
 		if (this->members.find(name) != this->members.end()) {
 			return this->members[name];
 		}
 		else {
 			throw "member not exists.";
 		}
-	}*/
-
-	// virtual semantic_method* get_method(std::wstring name) = 0;
-
+	}
 	std::map<std::wstring, semantic_method*> methods;
 };
 
@@ -98,8 +102,10 @@ public:
 	}
 };*/
 
-class semantic_method : public semantic_function {
+class semantic_method : public semantic_node {
 public:
+	semantic_method(semantic_class* type) : return_type(type) {};
+	semantic_class* return_type;
 	semantic_object* call(semantic_object* obj, std::vector<semantic_object*> arglist);
 };
 
