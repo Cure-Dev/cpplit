@@ -27,6 +27,8 @@
 #include "semantic/class.hpp"
 #include "semantic/environment.hpp"
 
+#include "utils/ranges.hpp"
+
 int main(int argc, char** args) {
 
     std::locale::global(std::locale(""));
@@ -77,6 +79,10 @@ int main(int argc, char** args) {
             }
             std::wcout << o;
         }
+        catch (const char* e) {
+            std::cout << e << std::endl;
+            return 1;
+        }
         catch (lexical_error* e) {
             handle_lexical_error(e, language::zh_cn);
             return 1;
@@ -113,6 +119,7 @@ int main(int argc, char** args) {
 
         auto var_list = environment {};
         var_list.insert({ L"val", new semantic_object_builtin_string { L"hello, world!" }});*/
+        std::cout << std::hex << L'\n';
     }
 
     else {

@@ -94,16 +94,9 @@ token_list lex(std::wstring src) {
 			i += 1;
 		}
 
-		else if (src[i] == L'\n') { // or cr, nel
-			token_type last_type = Token_list.back()->TYPE;
-			if (
-				last_type != token_type::EOL_ &&
-				last_type != token_type::BOF_ &&
-				last_type != token_type::COMMA &&
-				last_type != token_type::SEMICOLON &&
-				last_type != token_type::OPEN_PAREN &&
-				last_type != token_type::OPEN_BRACKET &&
-				last_type != token_type::OPEN_BRACE) {
+		// EOL
+		else if (src[i] == L'\u000A' || src[i] == L'\u000D' || src[i] == L'\u0085') { // LF || CR || NEL
+			if (Token_list.back()->TYPE != token_type::EOL_) {
 				Token_list.push_back(new token_symbol {token_type::EOL_, begin, i});
 			}
 			i += 1;
