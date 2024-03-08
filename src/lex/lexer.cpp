@@ -5,6 +5,8 @@
 #include "lex/numcvt.hpp"
 #include "exceptions/lex.hpp"
 
+#include "utils/ranges.hpp"
+
 #include <string>
 #include <vector>
 
@@ -12,27 +14,23 @@
 #include <stdexcept>
 
 const std::vector<int> allowed_identifier_char_ranges = {
-	65, 90,  // A-Z
-	97, 122, // a-z
-	95, 95,  // _
-	// 36, 36,  // $
-	48, 57,  // 0-9
-	32, 32,  // ␣
 
-	0x4e00, 0x9fff, // chinese characters
+	
+
 };
 
-bool is_idn(wchar_t c) {
+ranges identifier_charset = {
 
-	for (int i = 0; i < allowed_identifier_char_ranges.size(); i += 2) {
-		if (c >= allowed_identifier_char_ranges[i] && c <= allowed_identifier_char_ranges[i+1]) {
-			return true;
-			// break;
-		}
-	}
-	return false;
+	{ 65, 90 },  // A-Z
+	{ 97, 122 }, // a-z
+	{ 95, 95 },  // _
+	// { 36, 36 },  // $
+	{ 48, 57 },  // 0-9
+	{ 32, 32 },  // ␣
 
-}
+	{ 0x4E00, 0x9FFF }, // chinese characters
+
+};
 
 bool is_num(wchar_t n) {
 
@@ -79,7 +77,7 @@ token_list lex(std::wstring src) {
 
 		else if (src.substr(i, 2) == L";;") {
 			i += 2;
-			while (i < length && src[i] != L'\n') {
+			while (i < length && src[i] != L'\n') { //
 				i += 1;
 			}
 		}
@@ -133,7 +131,7 @@ token_list lex(std::wstring src) {
 		}
 
 		// entity.identifier || keyword || literal
-		else if (is_idn(src[i])) {
+		else if (identifier_charset.include(src[i])) {
 
 			std::wstring val;
 
@@ -144,7 +142,7 @@ token_list lex(std::wstring src) {
 				}
 				i += 1;
 
-			} while(i < length && is_idn(src[i]));
+			} while(i < length && identifier_charset.include(src[i]));
 
 			// remove back spaces
 			if (val[val.length()-1] == L' ') {

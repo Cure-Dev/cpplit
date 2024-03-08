@@ -6,37 +6,28 @@
 
 class ranges {
 public:
-	ranges(std::initializer_list<std::pair<int, int>> ranges_set) {
-		for (auto range : ranges_set) {
-			this->insert(range);
+	ranges(std::initializer_list<std::pair<int, int>> Ranges) {
+		for (auto range : Ranges) {
+			this->Ranges.push_back(range);
 		}
 	}
 
-private:
-	std::vector<std::pair<int, int>> ranges_set;
-
-	void insert(std::pair<int, int> range) {
-		if (range.first > range.second) {
-			throw "first must <= second";
-		}
-		
-		int len = this->ranges_set.size();
-/*		int mid = len / 2;
-		while () {
-			if (range.first() <= this->ranges_set[mid].first()) {
-				if (range.first() > this->ranges_set[mid-1]) //out of range
-			}
-		}*/
-        for (int i = 0; i < len; i += 1) {
-            if (this->ranges_set[i].first <= range.first && i+1 < len && range.first < this->ranges_set[i+1].first) {
-
+    bool include(int element) {
+        bool result = false;
+        for (auto range : this->Ranges) {
+            if (element >= range.first && element <= range.second) {
+                result = true;
+                break;
             }
         }
-	}
+        return result;
+    }
+
+private:
+	std::vector<std::pair<int, int>> Ranges;
 };
 
-
-#include <algorithm>
+/*#include <algorithm>
 
 class Range {
 public:
@@ -96,6 +87,6 @@ public:
             std::cout << "[" << interval.start << ", " << interval.end << "]" << std::endl;
         }
     }
-};
+};*/
 
 #endif
