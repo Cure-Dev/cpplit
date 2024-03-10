@@ -72,3 +72,7 @@ list<<base>> list<<sub>>
 constant
 
 child->method() + ''
+
+
+// overflow error, internal error?
+[Lit]

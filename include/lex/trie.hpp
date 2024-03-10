@@ -1,8 +1,8 @@
 #include <string>
 #include <map>
 
-#ifndef _TRIE_H_
-#define _TRIE_H_
+#ifndef _TRIE_HPP_
+#define _TRIE_HPP_
 
 class trie_node {
 public:

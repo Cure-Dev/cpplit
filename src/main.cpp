@@ -6,6 +6,8 @@
 
 #include <locale>
 
+#include "ansi.hpp"
+
 #include "exceptions/exception.hpp"
 
 
@@ -15,8 +17,6 @@
 
 #include "parse/parser.hpp"
 #include "parse/nodes.hpp"
-
-#include "ansi.hpp"
 
 #include "semantic/class.hpp"
 #include "semantic/environment.hpp"
@@ -39,14 +39,10 @@ int main(int argc, char** args) {
         else {
 
             std::string filepath = args[2];
-
-            // lexing...
+            // bool color;
             try {
                 std::wstring o = lex(filepath).view();
-                if (out_is_redired) {
-                    o = rmansi(o);
-                }
-                std::wcout << o << std::endl;
+                std::wcout << rmansi(o) << std::endl;
             }
             catch (exception* e) {
                 std::wcerr << e->msg(language::en_us) << std::endl;
@@ -62,10 +58,7 @@ int main(int argc, char** args) {
         try {
             node* ast = parse_exe(filepath);
             std::wstring o = ast->view();
-            if (out_is_redired) {
-                o = rmansi(o);
-            }
-            std::wcout << o;
+            std::wcout << rmansi(o);
         }
         catch (const char* e) {
             std::cerr << e << std::endl;
