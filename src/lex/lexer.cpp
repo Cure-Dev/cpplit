@@ -135,7 +135,9 @@ token_list lex(std::string filepath) {
 			}
 			// else if '`x837' 汉字标识符
 			else {
-				throw invalid_escape(begin, i);
+				auto _ = count_line_and_column(src, i);
+				int line = _[0], column = _[1];
+				throw new invalid_escape { to_wstring(filepath), line, column };
 			}
 		}
 

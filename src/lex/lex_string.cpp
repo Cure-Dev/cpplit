@@ -55,7 +55,7 @@ wchar_t string_escape(std::wstring src, int& i) {
 	}
 
 	else {
-		throw invalid_escape(begin, i);
+		throw invalid_string_escape();
 	}
 	return result;
 

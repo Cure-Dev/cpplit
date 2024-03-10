@@ -55,11 +55,7 @@ public:
 	}
 };
 
-/*class non_existent_operator : public lexerr {
-public:
-	non_existent_operator(wchar_t op) : lexerr(std::wstring(L"Symbol '") + op + L"' not exists"){};
-
-};*/
+// undefined symbol
 
 
 class unterminated_comments : public lexical_error {
@@ -80,9 +76,31 @@ public:
 	}
 };
 
-class invalid_escape : public lexerr { // 无效转义
+class invalid_escape : public lexical_error { // 无效转义
 public:
-	invalid_escape(int begin, int end) : lexerr(begin, end) {}; /*lexerr(L"invalid escape '...' from .. to ..") {};*/
+	invalid_escape(std::wstring file, int line, int column) : file(file), line(line), column(column) {}; /*lexerr(L"invalid escape '...' from .. to ..") {};*/
+	std::wstring file;
+	int line, column;
+
+	std::wstring msg(language L) {
+		std::wstringstream result;
+
+		if (L == language::en_us) {
+			result << "In file " << this->file << ", at line " << this->line << ", column " << this->column << "\n";
+			result << "error: invalid escape (..)";
+		}
+		// else
+		return result.str();
+	}
+};
+
+class invalid_string_escape : public lexical_error {
+public:
+	invalid_string_escape() {};
+
+	std::wstring msg(language L) {
+		return L"invalid string escape";
+	}
 };
 
 class unclosed_string : public lexical_error {
