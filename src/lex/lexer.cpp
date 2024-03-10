@@ -15,6 +15,35 @@
 
 #include <regex>
 
+
+
+#include <codecvt>
+
+std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+
+std::wstring to_wstring(const std::string& str) {
+    return converter.from_bytes(str);
+}
+
+
+int* count_line_and_column(std::wstring src, int index) {
+    int line = 1;
+    int column = 1;
+
+    for (int i = 0; i < index; i += 1) {
+        if (src[i] == L'\n') { //! NEL, CRLF?
+            line += 1;
+            column = 1;
+        }
+        else {
+            column += 1;
+        }
+    }
+
+    return new int[2] {line, column};
+}
+
+
 ranges identifier_charset = {
 
 	{ 65, 90 },  // A-Z
@@ -53,7 +82,6 @@ token_list lex(std::string filepath) {
 
 	int length = src.length();
 
-
 	for (int i = 0; i < length; ) {
 
 		int begin = i;
@@ -64,7 +92,9 @@ token_list lex(std::string filepath) {
 			do {
 				i += 1;
 				if (i >= length) {
-					throw unterminated_comments(begin, i);
+					auto _ = count_line_and_column(src, i);
+					int line = _[0], column = _[1];
+					throw new unterminated_comments { to_wstring(filepath), line, column };
 				}
 			} while (src[i] != L'#');
 			i += 1;

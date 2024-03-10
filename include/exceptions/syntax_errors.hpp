@@ -17,6 +17,10 @@ public:
 class unexpect_token : public syntex_error {
 public:
 	unexpect_token(int begin, int end) : syntex_error(begin, end) {};
+
+	std::wstring msg(language L) {
+		return L"unexpect_token";
+	}
 };
 
 class expect_identifier : public syntex_error {};

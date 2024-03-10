@@ -74,8 +74,8 @@ int main(int argc, char** args) {
             std::cout << e << std::endl;
             return 1;
         }
-        catch (lexical_error* e) {
-            handle_lexical_error(e, language::zh_cn);
+        catch (exception* e) {
+            std::wcout << e->msg(language::en_us) << std::endl;
             return 1;
         }
     }

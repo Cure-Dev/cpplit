@@ -7,9 +7,7 @@
 
 class exception {
 public:
-	virtual std::wstring msg(language L) {
-		return this->msg(L);
-	};
+	virtual std::wstring msg(language L) = 0;
 };
 
 #endif

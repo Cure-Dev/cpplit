@@ -7,25 +7,9 @@
 #ifndef _HANDLER_LEX_H_
 #define _HANDLER_LEX_H_
 
-int* count_line_and_column(std::wstring src, int index) {
-    int line = 1;
-    int column = 1;
-
-    for (int i = 0; i < index; i += 1) {
-        if (src[i] == L'\n') { //! NEL, CRLF?
-            line += 1;
-            column = 1;
-        }
-        else {
-            column += 1;
-        }
-    }
-
-    return new int[2] {line, column};
-}
 
 void make_output_header(std::wstring filepath, std::wstring src, lexical_error* e, language L) {
-    int* _ = count_line_and_column(src, e->BEGIN);
+/*    int* _ = count_line_and_column(src, e->BEGIN); //...
     int line = _[0], column = _[1];
     delete _;
 
@@ -34,7 +18,7 @@ void make_output_header(std::wstring filepath, std::wstring src, lexical_error* 
         break; //
     default:
         std::wcerr << "In file \"" << filepath << "\", at line " << line << ", column " << column << L"\n";
-    }
+    }*/
 }
 
 void handle_lexical_error(lexical_error* e, language L) {

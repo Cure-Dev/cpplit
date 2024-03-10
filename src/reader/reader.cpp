@@ -48,7 +48,7 @@ std::wstring read(std::string filepath, encoding Encoding) {
 
 	std::wstring result;
 
-	try {
+/*	try {
 		result = _read(filepath, Encoding);
 	}
 
@@ -65,7 +65,8 @@ std::wstring read(std::string filepath, encoding Encoding) {
     catch (std::exception e) {
     	std::wcerr << "Interal Error: ";
     	throw e;
-    }
+    }*/
+		result = _read(filepath, Encoding);
 
     return result;
 }

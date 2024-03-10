@@ -22,21 +22,16 @@ static std::wstring an(std::wstring name, std::wstring msg) {
 
 class lexical_error : public exception {
 public:
-	int BEGIN; //
-	lexical_error(int begin) : BEGIN(begin) {};
 
 	virtual std::wstring name(language L) { // static?
 		return this->name(L);
 	}
 
-	virtual std::wstring msg(language L) {
-		return L"";
-	}
 };
 
 class character_error : public lexical_error {
 public:
-	character_error(int pos, wchar_t ch) : lexical_error(pos), POS(pos), CH(ch) {};
+	character_error(int pos, wchar_t ch) : POS(pos), CH(ch) {};
 	int POS;
 	wchar_t CH;
 };
@@ -72,14 +67,23 @@ public:
 
 };*/
 
-class unterminated : public lexerr {
-public:
-	unterminated(std::wstring type, int begin, int end) : lexerr(begin, end) {}; /*lexerr(std::wstring(L"Unterminated ") + type + L" from " + std::to_wstring(start) + L" to " + std::to_wstring(end)) {};*/
-};
 
-class unterminated_comments : public unterminated {
+class unterminated_comments : public lexical_error {
 public:
-	unterminated_comments(int begin, int end) : unterminated(L"Comments(missing #)", begin, end) {};
+	unterminated_comments(std::wstring filepath, int line, int column) : filepath(filepath), line(line), column(column) {};
+	std::wstring filepath;
+	int line;
+	int column;
+
+	std::wstring msg(language L) {
+		std::wstringstream result;
+		switch (L) {
+		default:
+			result << "In file " << this->filepath << ", at line " << this->line << ", column " << this->column << "\n";
+			result << "error: unterminated comments";
+		}
+		return result.str();
+	}
 };
 
 class invalid_escape : public lexerr { // 无效转义
@@ -87,9 +91,13 @@ public:
 	invalid_escape(int begin, int end) : lexerr(begin, end) {}; /*lexerr(L"invalid escape '...' from .. to ..") {};*/
 };
 
-class unclosed_string : public unterminated {
+class unclosed_string : public lexical_error {
 public:
-	unclosed_string(int begin, int end) : unterminated(L"string", begin, end) {};
+	unclosed_string(int begin, int end) {};
+
+	std::wstring msg(language L) {
+		return L"";
+	}
 };
 
 #endif
