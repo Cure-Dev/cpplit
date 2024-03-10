@@ -7,9 +7,7 @@
 #include <locale>
 
 #include "exceptions/exception.hpp"
-#include "exceptions/fserrs.hpp"
 
-#include "exceptions/handler/lex.hpp"
 
 #include "lex/lexer.hpp"
 #include "exceptions/lex_errors.hpp"
@@ -50,9 +48,8 @@ int main(int argc, char** args) {
                 }
                 std::wcout << o << std::endl;
             }
-            catch (lexical_error* e) {
-                // make_output_header(std::wstring (filepath.begin(), filepath.end()), source, e, language::en_us);
-                handle_lexical_error(e, language::en_us);
+            catch (exception* e) {
+                std::wcerr << e->msg(language::en_us) << std::endl;
                 return 1;
             }
         }
@@ -71,11 +68,11 @@ int main(int argc, char** args) {
             std::wcout << o;
         }
         catch (const char* e) {
-            std::cout << e << std::endl;
+            std::cerr << e << std::endl;
             return 1;
         }
         catch (exception* e) {
-            std::wcout << e->msg(language::en_us) << std::endl;
+            std::wcerr << e->msg(language::en_us) << std::endl;
             return 1;
         }
     }
@@ -89,16 +86,16 @@ int main(int argc, char** args) {
             auto env = environment {};
             ast->exec(env);
         }
-        catch (lexical_error* e) {
-            handle_lexical_error(e, language::zh_cn);
+        catch (exception* e) {
+            std::wcerr << e->msg(language::en_us) << std::endl;
             return 1;
         }
         catch (const char* e) {
-            std::cout << e << std::endl;
+            std::cerr << e << std::endl;
             return 1;
         }
         catch (std::wstring e) {
-            std::wcout << e << std::endl;
+            std::wcerr << e << std::endl;
             return 1;
         }
     }
