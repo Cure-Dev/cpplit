@@ -4,7 +4,7 @@
 #ifndef _LEXER_H_
 #define _LEXER_H_
 
-token_list lex(std::wstring src);
+token_list lex(std::string filepath);
 
 static std::map<std::wstring, token_type> symbol_map = {
 

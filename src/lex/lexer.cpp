@@ -1,6 +1,9 @@
 #include "lex/lexer.hpp"
 #include "lex/lex_string.hpp"
 
+#include "reader/encoding.hpp"
+#include "reader/reader.hpp"
+
 #include "lex/tokens.hpp"
 #include "lex/numcvt.hpp"
 #include "exceptions/lex.hpp"
@@ -11,13 +14,6 @@
 #include <vector>
 
 #include <regex>
-#include <stdexcept>
-
-const std::vector<int> allowed_identifier_char_ranges = {
-
-	
-
-};
 
 ranges identifier_charset = {
 
@@ -48,9 +44,10 @@ namespace pats {
 
 };
 
-token_list lex(std::wstring src) {
+token_list lex(std::string filepath) {
 
 	token_list Token_list;
+	std::wstring src = read(filepath, encoding::UTF_8);
 
 	Token_list.push_back(new token_symbol {token_type::BOF_, 0, 0});
 

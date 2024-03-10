@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <vector>
 
@@ -11,9 +10,6 @@
 #include "exceptions/fserrs.hpp"
 
 #include "exceptions/handler/lex.hpp"
-
-#include "reader/reader.hpp"
-#include "reader/encoding.hpp"
 
 #include "lex/lexer.hpp"
 #include "exceptions/lex.hpp"
@@ -45,21 +41,17 @@ int main(int argc, char** args) {
         else {
 
             std::string filepath = args[2];
-            std::wstring source;
-
-            // reading...
-            source = read(filepath, encoding::UTF_8);
 
             // lexing...
             try {
-                std::wstring o = lex(source).view();
+                std::wstring o = lex(filepath).view();
                 if (out_is_redired) {
                     o = rmansi(o);
                 }
                 std::wcout << o << std::endl;
             }
             catch (lexical_error* e) {
-                make_output_header(std::wstring (filepath.begin(), filepath.end()), source, e, language::en_us);
+                // make_output_header(std::wstring (filepath.begin(), filepath.end()), source, e, language::en_us);
                 handle_lexical_error(e, language::en_us);
                 return 1;
             }
@@ -69,10 +61,9 @@ int main(int argc, char** args) {
 
     else if (command == "parse") {
         std::string filepath = args[2];
-        std::wstring source = read(filepath);
 
         try {
-            node* ast = parse_exe(lex(source));
+            node* ast = parse_exe(lex(filepath));
             std::wstring o = ast->view();
             if (out_is_redired) {
                 o = rmansi(o);
@@ -91,10 +82,9 @@ int main(int argc, char** args) {
 
     else if (command == "run") {
         std::string filepath = args[2];
-        std::wstring source = read(filepath);
 
         try {
-            execution_block* ast = parse_exe(lex(source));
+            execution_block* ast = parse_exe(lex(filepath));
 
             auto env = environment {};
             ast->exec(env);
@@ -119,7 +109,8 @@ int main(int argc, char** args) {
 
         auto var_list = environment {};
         var_list.insert({ L"val", new semantic_object_builtin_string { L"hello, world!" }});*/
-        std::cout << std::hex << L'\n';
+        ranges range = { {10, 100}};
+        std::cout << range.include(3) << range.include(50);
     }
 
     else {
