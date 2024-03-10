@@ -2,6 +2,7 @@
 #include <map>
 
 #include "lex/tokens.hpp"
+#include "lex/lexer.hpp"
 
 #include "parse/nodes.hpp"
 #include "parse/parser.hpp"
@@ -148,8 +149,8 @@ execution_block* parse_execution_block(const token_list& Token_list, int& index)
 	return parse_executions(Token_list, index, token_type::CLOSE_BRACE);
 }
 
-execution_block* parse_exe(token_list Token_list) { // parse main program
-	
+execution_block* parse_exe(std::string filepath) { // parse main program
+	token_list Token_list = lex(filepath);
 	int index = 1; // pass BOF
 	
 	return parse_executions(Token_list, index, token_type::EOF_);

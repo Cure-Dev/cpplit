@@ -63,7 +63,7 @@ int main(int argc, char** args) {
         std::string filepath = args[2];
 
         try {
-            node* ast = parse_exe(lex(filepath));
+            node* ast = parse_exe(filepath);
             std::wstring o = ast->view();
             if (out_is_redired) {
                 o = rmansi(o);
@@ -84,7 +84,7 @@ int main(int argc, char** args) {
         std::string filepath = args[2];
 
         try {
-            execution_block* ast = parse_exe(lex(filepath));
+            execution_block* ast = parse_exe(filepath);
 
             auto env = environment {};
             ast->exec(env);
