@@ -12,7 +12,7 @@
 #include "exceptions/handler/lex.hpp"
 
 #include "lex/lexer.hpp"
-#include "exceptions/lex.hpp"
+#include "exceptions/lex_errors.hpp"
 #include "lex/tokens.hpp"
 
 #include "parse/parser.hpp"

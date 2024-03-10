@@ -4,7 +4,7 @@
 #include "lex/tokens.hpp"
 #include "lex/trie.hpp"
 
-#include "exceptions/lex.hpp"
+#include "exceptions/lex_errors.hpp"
 
 trie_node* symbol_tree = new trie_node(); // ！ new忘写了。。。
 

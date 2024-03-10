@@ -7,8 +7,8 @@
 
 #include "language/language.hpp"
 
-#ifndef LEXERRS_H
-#define LEXERRS_H
+#ifndef _EXCEPTIONS_LEX_ERRORS_HPP_
+#define _EXCEPTIONS_LEX_ERRORS_HPP_
 
 class lexerr /*: public exception */{
 public:

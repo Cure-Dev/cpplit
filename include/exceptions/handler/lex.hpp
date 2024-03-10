@@ -1,6 +1,6 @@
 #include <iostream>
 #include "language/language.hpp"
-#include "exceptions/lex.hpp"
+#include "exceptions/lex_errors.hpp"
 
 #include "ansi.hpp"
 

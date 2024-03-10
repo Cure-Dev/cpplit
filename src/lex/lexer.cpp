@@ -6,7 +6,7 @@
 
 #include "lex/tokens.hpp"
 #include "lex/numcvt.hpp"
-#include "exceptions/lex.hpp"
+#include "exceptions/lex_errors.hpp"
 
 #include "utils/ranges.hpp"
 

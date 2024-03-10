@@ -1,6 +1,6 @@
 #include <set>
 
-#include "exceptions/lex.hpp"
+#include "exceptions/lex_errors.hpp"
 
 #include "lex/lex_string.hpp"
 #include "lex/numcvt.hpp"

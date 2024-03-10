@@ -1,4 +1,4 @@
-#include "exceptions/lex.hpp"
+#include "exceptions/lex_errors.hpp"
 #include "language/language.hpp"
 
 std::map<language, std::wstring> invalid_character::NAME = std::map<language, std::wstring> {
