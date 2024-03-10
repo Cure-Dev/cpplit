@@ -16,9 +16,9 @@ public:
 	int BEGIN, END;
 };
 
-static std::wstring an(std::wstring name, std::wstring msg) {
+/*static std::wstring an(std::wstring name, std::wstring msg) {
 	return L"\033[1;31m" + name + L"\033[0m: " + msg;
-}
+}*/
 
 class lexical_error : public exception {
 public:
@@ -38,26 +38,20 @@ public:
 
 class invalid_character : public character_error {
 public:
-	invalid_character(int pos, int ch) : character_error(pos, ch) {};
-
-	static std::map<language, std::wstring> NAME;
-
-	std::wstring name(language L) {
-		return NAME[L];
-	}
+	invalid_character(std::wstring filepath, int line, int column, int ch) : character_error(1, ch), filepath(filepath), line(line), column(column) {};
+	std::wstring filepath;
+	int line, column;
 
 	std::wstring msg(language L) {
-
-		std::wstringstream result_stream;
+		std::wstringstream result;
 
 		switch (L) {
-			default:
-				result_stream << L"'" << this->CH << L"' (U+" << std::hex << int(this->CH) << std::dec << L")";
+		default:
+			result << "In file " << this->filepath << ", at line " << this->line << ", column " << this->column << "\n";
+			result << "error: invalid character '" << this->CH << "' (U+" << std::hex << int(this->CH) << std::dec << L")";
 		}
 
-		std::wstring result = an(NAME[L], result_stream.str());
-
-		return result;
+		return result.str();
 	}
 };
 

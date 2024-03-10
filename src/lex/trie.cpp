@@ -46,7 +46,7 @@ token_type get_longest_symbol_match(std::wstring text, int& index) {
 
 	std::wstring match = text.substr(ori_index, index - ori_index);
 	if (match == L"") {
-		throw new invalid_character(index, text[index]);
+		throw new invalid_character { L"abc", index, index, text[index] }; //
 	}
 	return symbol_map[match];
 
