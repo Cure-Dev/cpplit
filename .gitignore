@@ -8,4 +8,4 @@
 
 *.old
 *.old.cpp
-*.old.h
+*.old.hpp
