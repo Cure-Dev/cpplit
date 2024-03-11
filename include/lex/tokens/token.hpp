@@ -98,10 +98,6 @@ enum class token_type {
 
 };
 
-
-token_type get_longest_symbol_match(std::wstring text, int& index);
-
-
 class token {
 public:
 	token_type TYPE;

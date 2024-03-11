@@ -43,6 +43,23 @@ int* count_line_and_column(std::wstring src, int index) {
     return new int[2] {line, column};
 }
 
+std::pair<int, int> position_format(const std::wstring& src, const int& index) {
+	int line = 1;
+    int column = 1;
+
+    for (int i = 0; i < index; i += 1) {
+        if (src[i] == L'\n') { //! NEL, CRLF?
+            line += 1;
+            column = 1;
+        }
+        else {
+            column += 1;
+        }
+    }
+
+    return { line, column };
+}
+
 
 ranges identifier_charset = {
 
@@ -70,6 +87,81 @@ bool is_num(wchar_t n) {
 namespace pats {
 
 	std::wregex num(L"^[0-9]+(\\.[0-9]+)?");
+
+};
+
+static trie<token_type> symbol_map = {
+
+// 通用
+
+	{ L"@", token_type::AT },
+	{ L"?", token_type::QUESTION },
+	{ L"!", token_type::NOT },
+	{ L"&", token_type::AND },
+	{ L"|", token_type::OR },
+	{ L"\\", token_type::XOR },
+
+	{ L"+", token_type::PLUS },
+	{ L"-", token_type::MINUS },
+	{ L"*", token_type::ASTERISK },
+	{ L"/", token_type::SLASH },
+	{ L"^", token_type::CARET },
+	{ L"^/", token_type::CARET_SLASH },
+	{ L"%", token_type::PERCENT },
+
+
+	{ L".", token_type::DOT },
+	{ L",", token_type::COMMA },
+	{ L":", token_type::COLON },
+	{ L";", token_type::SEMICOLON },
+	{ L"(", token_type::OPEN_PAREN },
+	{ L")", token_type::CLOSE_PAREN },
+	{ L"[", token_type::OPEN_BRACKET },
+	{ L"]", token_type::CLOSE_BRACKET },
+	{ L"{", token_type::OPEN_BRACE },
+	{ L"}", token_type::CLOSE_BRACE },
+	{ L"<<", token_type::DOUBLE_ANGLE_BRACKET_LEFT },
+	{ L">>", token_type::DOUBLE_ANGLE_BRACKET_RIGHT },
+
+	{ L">", token_type::GREATER },
+	{ L"<", token_type::LESS },
+	{ L">=", token_type::GREATER_EQUAL },
+	{ L"<=", token_type::LESS_EQUAL },
+	{ L"==", token_type::EQUAL_EQUAL },
+	{ L"!=", token_type::NOT_EQUAL },
+
+	{ L"->", token_type::BELONG },
+	{ L"=>", token_type::SUB },
+	{ L"!->", token_type::NOT_BELONG },
+	{ L"!=>", token_type::NOT_SUB },
+
+	{ L"=", token_type::EQUAL },
+	{ L"+=", token_type::PLUS_EQUAL },
+	{ L"-=", token_type::MINUS_EQUAL },
+	{ L"*=", token_type::ASTERISK_EQUAL },
+	{ L"/=", token_type::SLASH_EQUAL },
+	{ L"^=", token_type::CARET_EQUAL },
+	{ L"^/=", token_type::CARET_SLASH_EQUAL },
+	{ L"%=", token_type::PERCENT_EQUAL },
+
+// zh-cn
+	{ L"？", token_type::QUESTION },
+	{ L"！", token_type::NOT },
+
+	{ L"，", token_type::COMMA },
+	{ L"：", token_type::COLON },
+	{ L"；", token_type::SEMICOLON },
+	{ L"（", token_type::OPEN_PAREN },
+	{ L"）", token_type::CLOSE_PAREN },
+	{ L"【", token_type::OPEN_BRACKET },
+	{ L"】", token_type::CLOSE_BRACKET },
+	{ L"｛", token_type::OPEN_BRACE },
+	{ L"｝", token_type::CLOSE_BRACE },
+	{ L"《", token_type::DOUBLE_ANGLE_BRACKET_LEFT },
+	{ L"》", token_type::DOUBLE_ANGLE_BRACKET_RIGHT },
+
+	{ L"！->", token_type::NOT_BELONG },
+	{ L"！=>", token_type::NOT_SUB },
 
 };
 
@@ -191,11 +283,13 @@ token_list lex(std::string filepath) {
 		}
 
 		// token.symbol
-		else {
+		else if (symbol_map.include(src[i])) {
+			token_type val = symbol_map.get_match(src, i);
+			Token_list.push_back(new token_symbol { val, begin, i });
+		}
 
-			token_type val = get_longest_symbol_match(src, i);
-			Token_list.push_back(new token_symbol {val, begin, i});
-			
+		else {
+			throw new invalid_character { to_wstring(filepath), position_format(src, i), src[i] };
 		}
 
 	}

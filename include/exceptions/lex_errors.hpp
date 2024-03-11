@@ -38,16 +38,16 @@ public:
 
 class invalid_character : public character_error {
 public:
-	invalid_character(std::wstring filepath, int line, int column, int ch) : character_error(1, ch), filepath(filepath), line(line), column(column) {};
+	invalid_character(std::wstring filepath, std::pair<int, int> position, wchar_t ch) : character_error(1, ch), filepath(filepath), position(position) {};
 	std::wstring filepath;
-	int line, column;
+	std::pair<int, int> position;
 
 	std::wstring msg(language L) {
 		std::wstringstream result;
 
 		switch (L) {
 		default:
-			result << "In file " << this->filepath << ", at line " << this->line << ", column " << this->column << "\n";
+			result << "In file " << this->filepath << ", at line " << this->position.first << ", column " << this->position.second << "\n";
 			result << "error: invalid character '" << this->CH << "' (U+" << std::hex << int(this->CH) << std::dec << L")";
 		}
 
