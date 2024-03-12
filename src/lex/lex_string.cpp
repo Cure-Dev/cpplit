@@ -6,6 +6,8 @@
 #include "lex/numcvt.hpp"
 #include "lex/tokens.hpp"
 
+#include "utils/position.hpp"
+
 std::set<wchar_t> head_set = {
 
 // global
@@ -17,7 +19,7 @@ std::set<wchar_t> head_set = {
 	L'“',
 };
 
-wchar_t string_escape(std::wstring src, int& i) {
+wchar_t string_escape(std::wstring src, int& i, const std::wstring& filepath) {
 
 	int begin = i;
 	wchar_t result;
@@ -55,7 +57,7 @@ wchar_t string_escape(std::wstring src, int& i) {
 	}
 
 	else {
-		throw invalid_string_escape();
+		throw new invalid_string_escape { filepath, position_format(src, i) };
 	}
 	return result;
 
@@ -124,7 +126,7 @@ std::wstring lex_glob_string(std::wstring src, int& i) {
 	return val;
 }
 
-std::wstring lex_glob_line_escapable_string(std::wstring src, int& i) {
+std::wstring lex_glob_line_escapable_string(std::wstring src, int& i, const std::wstring& filepath) {
 	int begin = i;
 	int length = src.length();
 	std::wstring val;
@@ -140,7 +142,7 @@ std::wstring lex_glob_line_escapable_string(std::wstring src, int& i) {
 		}
 		else if (src[i] == L'`') {
 			i += 1;
-			val += string_escape(src, i);
+			val += string_escape(src, i, filepath);
 		}
 		else {
 			val += src[i++];
@@ -150,7 +152,7 @@ std::wstring lex_glob_line_escapable_string(std::wstring src, int& i) {
 	return val;
 };
 
-std::wstring lex_glob_block_escapable_string(std::wstring src, int& i) {
+std::wstring lex_glob_block_escapable_string(std::wstring src, int& i, const std::wstring& filepath) {
 	int begin = i;
 	int length = src.length();
 	std::wstring val;
@@ -165,7 +167,7 @@ std::wstring lex_glob_block_escapable_string(std::wstring src, int& i) {
 		}
 		else if (src[i] == L'`') {
 			i += 1;
-			val += string_escape(src, i);
+			val += string_escape(src, i, filepath);
 		}
 		else {
 			val += src[i++];
@@ -176,20 +178,20 @@ std::wstring lex_glob_block_escapable_string(std::wstring src, int& i) {
 }
 
 
-std::wstring lex_glob_escapable_string(std::wstring src, int& i) {
+std::wstring lex_glob_escapable_string(std::wstring src, int& i, const std::wstring& filepath) {
 	std::wstring val;
 	if (src.substr(i, 2) == L"\"\"") {
 		i += 2;
-		return lex_glob_block_escapable_string(src, i);
+		return lex_glob_block_escapable_string(src, i, filepath);
 	}
 	else {
-		val = lex_glob_line_escapable_string(src, i);
+		val = lex_glob_line_escapable_string(src, i, filepath);
 	}
 	return val;
 }
 
 
-token_string* lex_string(std::wstring src, int& i) {
+token_string* lex_string(std::wstring src, int& i, const std::wstring& filepath) {
 	int begin = i;
 	wchar_t bs = src[i++]; // begin symbol
 	std::wstring val;
@@ -199,7 +201,7 @@ token_string* lex_string(std::wstring src, int& i) {
 	}
 
 	else if (bs == L'"') {
-		val = lex_glob_escapable_string(src, i);
+		val = lex_glob_escapable_string(src, i, filepath);
 	}
 
 	return new token_string {val, begin, i};

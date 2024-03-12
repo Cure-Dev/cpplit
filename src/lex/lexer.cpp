@@ -15,7 +15,7 @@
 
 #include <regex>
 
-
+#include "utils/position.hpp"
 
 #include <codecvt>
 
@@ -23,41 +23,6 @@ std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
 
 std::wstring to_wstring(const std::string& str) {
     return converter.from_bytes(str);
-}
-
-
-int* count_line_and_column(std::wstring src, int index) {
-    int line = 1;
-    int column = 1;
-
-    for (int i = 0; i < index; i += 1) {
-        if (src[i] == L'\n') { //! NEL, CRLF?
-            line += 1;
-            column = 1;
-        }
-        else {
-            column += 1;
-        }
-    }
-
-    return new int[2] {line, column};
-}
-
-std::pair<int, int> position_format(const std::wstring& src, const int& index) {
-	int line = 1;
-    int column = 1;
-
-    for (int i = 0; i < index; i += 1) {
-        if (src[i] == L'\n') { //! NEL, CRLF?
-            line += 1;
-            column = 1;
-        }
-        else {
-            column += 1;
-        }
-    }
-
-    return { line, column };
 }
 
 
@@ -184,9 +149,7 @@ token_list lex(std::string filepath) {
 			do {
 				i += 1;
 				if (i >= length) {
-					auto _ = count_line_and_column(src, i);
-					int line = _[0], column = _[1];
-					throw new unterminated_comments { to_wstring(filepath), line, column };
+					throw new unterminated_comments { to_wstring(filepath), position_format(src, i) };
 				}
 			} while (src[i] != L'#');
 			i += 1;
@@ -201,7 +164,7 @@ token_list lex(std::string filepath) {
 			}
 		}
 
-		// whitespace
+		// whitespace (ignore character)
 
 		else if (src[i] == L' ') {
 			i += 1;
@@ -227,14 +190,13 @@ token_list lex(std::string filepath) {
 			}
 			// else if '`x837' 汉字标识符
 			else {
-				auto _ = count_line_and_column(src, i);
-				int line = _[0], column = _[1];
-				throw new invalid_escape { to_wstring(filepath), line, column };
+				throw new invalid_escape { to_wstring(filepath), position_format(src, i) };
 			}
 		}
 
+		// string
 		else if (string_head_matched(src[i])) {
-			Token_list.push_back(lex_string(src, i));
+			Token_list.push_back(lex_string(src, i, to_wstring(filepath)));
 		}
 
 		// entity.literal.number
