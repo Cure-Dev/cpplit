@@ -41,7 +41,7 @@ static std::map<std::wstring, bool> literal_bool_map = {
 
 // en-us
 	{ L"true", true },
-	{ L"true", false },
+	{ L"false", false },
 
 // zh-cn
 	{ L"真", true },
