@@ -22,12 +22,12 @@
 #include "semantic/environment.hpp"
 
 #include "utils/ranges.hpp"
+#include "utils/losh.hpp"
 
 int main(int argc, char** args) {
 
     std::locale::global(std::locale(""));
 
-    // losh
 
     std::string command = args[1];
 
@@ -99,8 +99,9 @@ int main(int argc, char** args) {
 
         auto var_list = environment {};
         var_list.insert({ L"val", new semantic_object_builtin_string { L"hello, world!" }});*/
-        ranges range = { {10, 100}};
-        std::cout << range.include(3) << range.include(50);
+
+        losh cmd = { argc, args };
+        std::wcout << cmd.view();
     }
 
     else {
