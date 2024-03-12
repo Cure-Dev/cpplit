@@ -1,7 +1,7 @@
 #include "lex/lexer.hpp"
 #include "lex/lex_string.hpp"
 
-#include "reader/encoding.hpp"
+#include "utils/encoding.hpp"
 #include "reader/reader.hpp"
 
 #include "lex/tokens.hpp"
@@ -17,15 +17,6 @@
 
 #include "utils/position.hpp"
 #include "lex/trie.hpp"
-
-#include <codecvt>
-
-std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-
-std::wstring to_wstring(const std::string& str) {
-    return converter.from_bytes(str);
-}
-
 
 ranges identifier_charset = {
 
@@ -248,7 +239,7 @@ token_list lex(std::string filepath) {
 			do {
 				i += 1;
 				if (i >= length) {
-					throw new unterminated_comments { to_wstring(filepath), position_format(src, i) };
+					throw new unterminated_comments { to_wstring(encoding::UTF_8, filepath), position_format(src, i) };
 				}
 			} while (src[i] != L'#');
 			i += 1;
@@ -289,13 +280,13 @@ token_list lex(std::string filepath) {
 			}
 			// else if '`x837' 汉字标识符
 			else {
-				throw new invalid_escape { to_wstring(filepath), position_format(src, i) };
+				throw new invalid_escape { to_wstring(encoding::UTF_8, filepath), position_format(src, i) };
 			}
 		}
 
 		// string
 		else if (string_head_matched(src[i])) {
-			Token_list.push_back(lex_string(src, i, to_wstring(filepath)));
+			Token_list.push_back(lex_string(src, i, to_wstring(encoding::UTF_8, filepath)));
 		}
 
 		// entity.literal.number
@@ -350,7 +341,7 @@ token_list lex(std::string filepath) {
 		}
 
 		else {
-			throw new invalid_character { to_wstring(filepath), position_format(src, i), src[i] };
+			throw new invalid_character { to_wstring(encoding::UTF_8, filepath), position_format(src, i), src[i] };
 		}
 
 	}
