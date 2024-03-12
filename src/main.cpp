@@ -6,7 +6,7 @@
 
 #include <locale>
 
-#include "ansi.hpp"
+#include "utils/ansi.hpp"
 
 #include "exceptions/exception.hpp"
 
