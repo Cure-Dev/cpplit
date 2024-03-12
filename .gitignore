@@ -2,6 +2,7 @@
 
 /build
 /bin
+/dist
 /test
 
 *.old
