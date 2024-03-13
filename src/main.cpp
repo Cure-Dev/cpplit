@@ -28,9 +28,9 @@
 int main(int argc, char** args) {
 
     std::locale::global(std::locale(""));
+    losh command = { argc, args };
 
     try {
-        losh command = { argc, args };
         std::wstring cmd;
 
         if (command.has_static()) {
@@ -80,22 +80,15 @@ int main(int argc, char** args) {
                 auto var_list = environment {};
                 var_list.insert({ L"val", new semantic_object_builtin_string { L"hello, world!" }});*/
 
-                losh cmd = { argc, args };
-                cmd.get_static();
-                // std::wcout << cmd.view();
-                if (cmd.has_string(L"lang")) {
-                    std::wcout << cmd.get_string(L"lang");
-                }
-                // int a=NULL;
             }
 
             else {
-                std::wcout << "unknown command.\n";
+                throw new unknown_command { cmd };
             }
         }
 
         else {
-            std::wcout << "introductions";
+            std::wcout << "introductions\n";
         }
     }
     catch (exception* e) {

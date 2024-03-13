@@ -13,5 +13,23 @@ public:
 	}
 };
 
+class unknown_command : public command_error {
+public:
+	unknown_command(std::wstring name) : name(name) {}
+	std::wstring name;
+
+	std::wstring msg(language L) {
+		std::wstringstream result;
+
+		if (L == language::zh_cn) {
+			result << L"错误：未知命令 " << this->name;
+		}
+		else {
+			result << "error: unknown command " << this->name << "\n(maybe try) type =help for more information";
+		}
+		return result.str();
+	}
+};
+
 
 #endif

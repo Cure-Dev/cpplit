@@ -97,7 +97,7 @@ private:
 	std::map<std::wstring, bool> bool_args;
 	std::map<std::wstring, std::wstring> string_args;
 
-	int pointer;
+	int pointer = 0;
 };
 
 #endif
