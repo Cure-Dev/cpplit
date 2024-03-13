@@ -25,6 +25,8 @@
 #include "utils/ranges.hpp"
 #include "utils/losh.hpp"
 
+#include "extra/helper/helper.hpp"
+
 int main(int argc, char** args) {
 
     std::locale::global(std::locale(""));
@@ -100,7 +102,8 @@ int main(int argc, char** args) {
         }
 
         else {
-            std::wcout << "introductions\n";
+            // std::wcout << "introductions\n";
+            help(command);
         }
     }
     catch (exception* e) {
