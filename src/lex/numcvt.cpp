@@ -1,7 +1,7 @@
 #include <map>
 #include <string>
 
-#include "lex/numcvt.hpp"
+#include "utils/numcvt.hpp"
 
 unsigned int cvt(std::map<wchar_t, int> cvt_map, int base, std::wstring src, int& i) {
 
@@ -88,4 +88,36 @@ unsigned int cvt_hex(std::wstring src, int& i) {
 		{ L'F', 15 },
 	};
 	return cvt(cvt_map, 16, src, i);
+}
+
+std::wstring to_hex(int num) {
+	static std::map<int, wchar_t> map = {
+		{ 0, L'0' },
+		{ 1, L'1' },
+		{ 2, L'2' },
+		{ 3, L'3' },
+		{ 4, L'4' },
+		{ 5, L'5' },
+		{ 6, L'6' },
+		{ 7, L'7' },
+		{ 8, L'8' },
+		{ 9, L'9' },
+		{ 10, L'A' },
+		{ 11, L'B' },
+		{ 12, L'C' },
+		{ 13, L'D' },
+		{ 14, L'E' },
+		{ 15, L'F' },
+	};
+
+	std::wstring result;
+
+	do {
+		wchar_t bit = map[num % 16];
+		num /= 16;
+		result.insert(0, 1, bit);
+		// result = bit + result; // ???
+	} while (num != 0);
+
+	return result;
 }

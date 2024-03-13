@@ -1,4 +1,3 @@
-
 #include <string>
 #include <map>
 #include <sstream>
@@ -8,6 +7,7 @@
 #include "language/language.hpp"
 
 #include "utils/position.hpp"
+#include "utils/numcvt.hpp"
 
 #ifndef _EXCEPTIONS_LEX_ERRORS_HPP_
 #define _EXCEPTIONS_LEX_ERRORS_HPP_
@@ -40,12 +40,12 @@ public:
 
 		if (L == language::zh_cn) {
 			result << L"在文件 " << this->filepath << L" 的第 " << this->pos.line << L" 行第 " << this->pos.column << L" 列\n";
-			result << L"错误：无效字符 ‘" << this->Char << L"’（U+" << std::hex << int(this->Char) << std::dec << L"）";
+			result << L"错误：无效字符 ‘" << this->Char << L"’（U+" << to_hex(this->Char) << L"）";
 		}
 
 		else {
 			result << "In file " << this->filepath << ", at line " << this->pos.line << ", column " << this->pos.column << "\n";
-			result << "error: invalid character '" << this->Char << "' (U+" << std::hex << int(this->Char) << std::dec << L")";
+			result << "error: invalid character '" << this->Char << "' (U+" << to_hex(this->Char) << L")";
 		}
 
 		return result.str();

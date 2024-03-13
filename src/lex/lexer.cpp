@@ -5,10 +5,11 @@
 #include "reader/reader.hpp"
 
 #include "lex/tokens.hpp"
-#include "lex/numcvt.hpp"
+#include "utils/numcvt.hpp"
 #include "exceptions/lex_errors.hpp"
 
 #include "utils/ranges.hpp"
+#include "utils/null.hpp"
 
 #include <string>
 #include <vector>
@@ -91,9 +92,7 @@ namespace pats {
 
 };
 
-static std::map<std::wstring, token_symbol::type> new_symbol_map = {
-
-	{ L"\n", token_symbol::type::EOL_ }, // lf
+std::map<std::wstring, token_symbol::type> new_symbol_map = {
 
 	{ L"@", token_symbol::type::AT },
 	{ L"?", token_symbol::type::QUESTION },
@@ -145,7 +144,7 @@ static std::map<std::wstring, token_symbol::type> new_symbol_map = {
 	{ L"%=", token_symbol::type::PERCENT_EQUAL },
 };
 
-static trie<token_type> symbol_map = {
+trie<token_type> symbol_map = {
 
 // 通用
 
@@ -220,6 +219,11 @@ static trie<token_type> symbol_map = {
 
 };
 
+trie<null> ignore_set = {
+	{ L" ", Null },
+	{ L"\t", Null },
+};
+
 token_list lex(std::wstring filepath) {
 
 	token_list Token_list;
@@ -253,14 +257,9 @@ token_list lex(std::wstring filepath) {
 			}
 		}
 
-		// whitespace (ignore character)
-
-		else if (src[i] == L' ') {
-			i += 1;
-		}
-
-		else if (src[i] == L'\t' || src[i] == L'\v') {
-			i += 1;
+		// whitespace (ignored character)
+		else if (ignore_set.include(src[i])) { // `v
+			ignore_set.get_match(src, i);
 		}
 
 		// EOL

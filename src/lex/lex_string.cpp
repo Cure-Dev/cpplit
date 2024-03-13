@@ -3,7 +3,7 @@
 #include "exceptions/lex_errors.hpp"
 
 #include "lex/lex_string.hpp"
-#include "lex/numcvt.hpp"
+#include "utils/numcvt.hpp"
 #include "lex/tokens.hpp"
 
 #include "utils/position.hpp"
