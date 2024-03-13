@@ -220,7 +220,7 @@ static trie<token_type> symbol_map = {
 
 };
 
-token_list lex(std::string filepath) {
+token_list lex(std::wstring filepath) {
 
 	token_list Token_list;
 	std::wstring src = read(filepath, coding::UTF_8);
@@ -239,14 +239,13 @@ token_list lex(std::string filepath) {
 			do {
 				i += 1;
 				if (i >= length) {
-					throw new unterminated_comments { to_wstring(coding::UTF_8, filepath), position_format(src, i) };
+					throw new unterminated_comments { filepath, position_format(src, i) };
 				}
 			} while (src[i] != L'#');
 			i += 1;
 		}
 
 		// comments.single_line
-
 		else if (src.substr(i, 2) == L";;") {
 			i += 2;
 			while (i < length && src[i] != L'\n') { //
@@ -280,13 +279,13 @@ token_list lex(std::string filepath) {
 			}
 			// else if '`x837' 汉字标识符
 			else {
-				throw new invalid_escape { to_wstring(coding::UTF_8, filepath), position_format(src, i) };
+				throw new invalid_escape { filepath, position_format(src, i) };
 			}
 		}
 
 		// string
 		else if (string_head_matched(src[i])) {
-			Token_list.push_back(lex_string(src, i, to_wstring(coding::UTF_8, filepath)));
+			Token_list.push_back(lex_string(src, i, filepath));
 		}
 
 		// entity.literal.number
@@ -341,7 +340,7 @@ token_list lex(std::string filepath) {
 		}
 
 		else {
-			throw new invalid_character { to_wstring(coding::UTF_8, filepath), position_format(src, i), src[i] };
+			throw new invalid_character { filepath, position_format(src, i), src[i] };
 		}
 
 	}

@@ -6,15 +6,15 @@
 #include "utils/coding.hpp"
 #include "reader/reader.hpp"
 
-std::wstring read(std::string filepath, coding Coding) {
+std::wstring read(std::wstring filepath, coding Coding) {
 
 	std::string source;
 
 	std::ifstream file;
-	file.open(filepath, std::ios::in);
+	file.open(to_string(coding::UTF_8, filepath), std::ios::in);
 
 	if (! file.is_open()) {
-		throw new file_not_exists { to_wstring(coding::UTF_8, filepath) };
+		throw new file_not_exists { filepath };
 	}
 
 	char c;

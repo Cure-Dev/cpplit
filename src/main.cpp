@@ -9,6 +9,7 @@
 #include "utils/ansi.hpp"
 
 #include "exceptions/exception.hpp"
+#include "exceptions/command_errors.hpp"
 
 
 #include "lex/lexer.hpp"
@@ -28,85 +29,91 @@ int main(int argc, char** args) {
 
     std::locale::global(std::locale(""));
 
+    try {
+        losh command = { argc, args };
+        std::wstring cmd;
 
-    std::string command = args[1];
+        if (command.has_static()) {
+            cmd = command.get_static();
 
-    if (command == "lex") {
+            if (cmd == L"lex" || cmd == L"词法分析") {
+                std::wstring filepath;
 
-        if (args[2] == NULL) {
-            throw;
-        }
-        else {
+                if (command.has_static()) {
+                    filepath = command.get_static();
+                }
+                else {
+                    throw new missing_argument { L"filepath" };
+                }
 
-            std::string filepath = args[2];
-            // bool color;
-            try {
+                // bool color;
                 std::wstring o = lex(filepath).view();
-                std::wcout << rmansi(o) << std::endl;
+                std::wcout << rmansi(o) << std::endl;                
+            
             }
-            catch (exception* e) {
-                std::wcerr << e->msg(language::en_us) << std::endl;
-                return 1;
+
+            else if (cmd == L"parse") {
+                std::string filepath_ = args[2];
+                std::wstring filepath = to_wstring(coding::UTF_8, filepath_);
+
+                node* ast = parse_exe(filepath);
+                std::wstring o = ast->view();
+                std::wcout << rmansi(o);
+                
+            }
+
+            else if (cmd == L"run") {
+                std::string filepath_ = args[2];
+                std::wstring filepath = to_wstring(coding::UTF_8, filepath_);
+
+                execution_block* ast = parse_exe(filepath);
+
+                auto env = environment {};
+                ast->exec(env);
+
+            }
+
+            else if (cmd == L"test") {
+        /*        auto ofunc = new lit_io_output {};
+                ofunc->call({ new semantic_object_builtin_string { L"hello, world!" } });
+
+                auto var_list = environment {};
+                var_list.insert({ L"val", new semantic_object_builtin_string { L"hello, world!" }});*/
+
+                losh cmd = { argc, args };
+                cmd.get_static();
+                // std::wcout << cmd.view();
+                if (cmd.has_string(L"lang")) {
+                    std::wcout << cmd.get_string(L"lang");
+                }
+                // int a=NULL;
+            }
+
+            else {
+                std::wcout << "unknown command.\n";
             }
         }
-        
-    }
 
-    else if (command == "parse") {
-        std::string filepath = args[2];
-
-        try {
-            node* ast = parse_exe(filepath);
-            std::wstring o = ast->view();
-            std::wcout << rmansi(o);
-        }
-        catch (const char* e) {
-            std::cerr << e << std::endl;
-            return 1;
-        }
-        catch (exception* e) {
-            std::wcerr << e->msg(language::en_us) << std::endl;
-            return 1;
+        else {
+            std::wcout << "introductions";
         }
     }
-
-    else if (command == "run") {
-        std::string filepath = args[2];
-
-        try {
-            execution_block* ast = parse_exe(filepath);
-
-            auto env = environment {};
-            ast->exec(env);
-        }
-        catch (exception* e) {
-            std::wcerr << e->msg(language::en_us) << std::endl;
-            return 1;
-        }
-        catch (const char* e) {
-            std::cerr << e << std::endl;
-            return 1;
-        }
-        catch (std::wstring e) {
-            std::wcerr << e << std::endl;
-            return 1;
-        }
+    catch (exception* e) {
+        std::wcerr << e->msg(language::en_us) << std::endl;
+        return 1;
     }
 
-    else if (command == "test") {
-/*        auto ofunc = new lit_io_output {};
-        ofunc->call({ new semantic_object_builtin_string { L"hello, world!" } });
-
-        auto var_list = environment {};
-        var_list.insert({ L"val", new semantic_object_builtin_string { L"hello, world!" }});*/
-
-        losh cmd = { argc, args };
-        std::wcout << cmd.view();
+    // temp
+    catch (const char* e) {
+        std::cerr << e << std::endl;
+        return 1;
     }
 
-    else {
-        std::wcout << "no command or unknown command.\n";
+    catch (std::wstring e) {
+        std::wcerr << e << std::endl;
+        return 1;
     }
+    // std except
 
     return 0;
 }
