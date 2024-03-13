@@ -53,9 +53,15 @@ int main(int argc, char** args) {
             }
 
             else if (cmd == L"parse") {
-                std::string filepath_ = args[2];
-                std::wstring filepath = to_wstring(coding::UTF_8, filepath_);
+                std::wstring filepath;
 
+                if (command.has_static()) {
+                    filepath = command.get_static();
+                }
+                else {
+                    throw new missing_argument { L"filepath" };
+                }
+                
                 node* ast = parse_exe(filepath);
                 std::wstring o = ast->view();
                 std::wcout << rmansi(o);
@@ -63,8 +69,14 @@ int main(int argc, char** args) {
             }
 
             else if (cmd == L"run") {
-                std::string filepath_ = args[2];
-                std::wstring filepath = to_wstring(coding::UTF_8, filepath_);
+                std::wstring filepath;
+
+                if (command.has_static()) {
+                    filepath = command.get_static();
+                }
+                else {
+                    throw new missing_argument { L"filepath" };
+                }
 
                 execution_block* ast = parse_exe(filepath);
 

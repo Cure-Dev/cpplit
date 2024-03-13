@@ -14,7 +14,7 @@ std::wstring read(std::wstring filepath, coding Coding) {
 	file.open(to_string(coding::UTF_8, filepath), std::ios::in);
 
 	if (! file.is_open()) {
-		throw new file_not_exists { filepath };
+		throw new file_not_exists { filepath }; // perm access
 	}
 
 	char c;
