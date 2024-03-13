@@ -1,3 +1,5 @@
+#include <sstream>
+
 #ifndef _EXCEPTIONS_COMMAND_ERRORS_HPP_
 #define _EXCEPTIONS_COMMAND_ERRORS_HPP_
 
