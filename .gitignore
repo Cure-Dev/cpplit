@@ -1,9 +1,6 @@
-/.sublime
-
 /build
 /bin
 /dist
-/test
 
 *.old
 *.old.cpp
