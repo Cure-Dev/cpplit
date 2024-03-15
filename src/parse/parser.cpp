@@ -64,14 +64,9 @@ expr* parse_miditem(const token_list& Token_list, int& index) {
 		result = parse_expr_keywords(Token_list, index);
 	}
 
-	else if (first->TYPE == token_type::OPEN_PAREN) {
+	else if (check_symbol_if(first, token_symbol::type::PAREN_LEFT)) {
 		result = parse_expression(Token_list, index);
-		if (Token_list[index]->TYPE != token_type::CLOSE_PAREN) {
-			throw "expect ')' || not closed";
-		}
-		else {
-			index += 1;
-		}
+		check_symbol(Token_list, index, token_symbol::type::PAREN_RIGHT);
 	}
 	else {
 		throw "";

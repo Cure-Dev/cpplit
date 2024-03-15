@@ -6,8 +6,6 @@ TYPE_namespace* parse_namespace(const token_list& Token_list, int& index) {
 
 	defination_block* block = parse_defination_block(Token_list, index);
 
-	check_symbol(Token_list, index, token_symbol::type::BRACE_RIGHT);
-
 	return new TYPE_namespace { block, block->BEGIN, block->END };
 
 }
@@ -40,7 +38,7 @@ conditional_branches* parse_ifs(const token_list& Token_list, int& index) {
 	result.push_back(parse_if(Token_list, index));
 
 	while (true) {
-		if (Token_list[index]->TYPE == token_type::EOL_) {
+		if (check_symbol_if(Token_list[index], token_symbol::type::EOL_)) {
 			index += 1;
 		}
 		else if (dynamic_cast<token_keyword*> (Token_list[index]) != NULL && dynamic_cast<token_keyword*> (Token_list[index])->Type == token_keyword::type::ELSE_IF) {

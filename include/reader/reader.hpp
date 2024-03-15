@@ -4,5 +4,6 @@
 #define _READER_H_
 
 std::wstring read(std::wstring filepath, coding Coding = coding::UTF_8);
+std::wstring get_content(std::wstring filepath);
 
 #endif

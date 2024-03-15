@@ -25,17 +25,18 @@ defination_block* parse_defination_block(const token_list& Token_list, int& inde
 
 	std::vector<defination*> result;
 
-	while (Token_list[index]->TYPE != token_type::CLOSE_BRACE) {
-		if (Token_list[index]->TYPE == token_type::SEMICOLON || Token_list[index]->TYPE == token_type::EOL_) {
+	while (!check_symbol_if(Token_list[index], token_symbol::type::BRACE_RIGHT)) {
+
+		if (check_symbol_if(Token_list[index], token_symbol::type::SEMICOLON) || check_symbol_if(Token_list[index], token_symbol::type::EOL_)) {
 			index += 1;
 		}
 		else {
 			result.push_back(parse_defination(Token_list, index));
-			if (Token_list[index]->TYPE != token_type::CLOSE_BRACE && Token_list[index]->TYPE != token_type::SEMICOLON && Token_list[index]->TYPE != token_type::EOL_) {
+			if (!check_symbol_if(Token_list[index], token_symbol::type::BRACE_RIGHT) && !check_symbol_if(Token_list[index], token_symbol::type::SEMICOLON) && !check_symbol_if(Token_list[index], token_symbol::type::EOL_)) {
 				throw "unexpect token";
 			}
 		}
 	}
 
-	return new defination_block { result, begin, index };
+	return new defination_block { result, begin, index++ };
 }

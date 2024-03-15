@@ -1,10 +1,13 @@
-#include <iostream>
 #include <fstream>
 #include <string>
+#include <map>
 
 #include "exceptions/fserrs.hpp"
 #include "utils/coding.hpp"
 #include "reader/reader.hpp"
+
+std::map<std::wstring, std::wstring> content_map;
+
 
 std::wstring read(std::wstring filepath, coding Coding) {
 
@@ -23,6 +26,12 @@ std::wstring read(std::wstring filepath, coding Coding) {
 	}
 
 	file.close();
+	std::wstring result = to_wstring(Coding, source);
 
-	return to_wstring(Coding, source);
+	content_map[filepath] = result;
+	return result;
+}
+
+std::wstring get_content(std::wstring filepath) {
+	return content_map[filepath];
 }

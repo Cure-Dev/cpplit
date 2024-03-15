@@ -3,34 +3,31 @@
 #include "lex/tokens.hpp"
 
 expr* parse_multi_divis(const token_list& Token_list, int& index) {
-
-	static std::map<token_type, binary_expr::type> map = {
-		{ token_type::ASTERISK, binary_expr::type::multiplication },
-		{ token_type::SLASH, binary_expr::type::division },
+	static std::map<token_symbol::type, binary_expr::type> map = {
+		{ token_symbol::type::ASTERISK, binary_expr::type::multiplication },
+		{ token_symbol::type::SLASH, binary_expr::type::division },
 	};
-	expr* left;
 
-	left = parse_prefix(Token_list, index);
-
-	while (map.find(Token_list[index]->TYPE) != map.end()) {
-		auto sym = Token_list[index++];
+	expr* left = parse_prefix(Token_list, index);
+	while (dynamic_cast<token_symbol*> (Token_list[index]) != NULL && map.find((dynamic_cast<token_symbol*> (Token_list[index]))->Type) != map.end()) {
+		auto sym = dynamic_cast<token_symbol*> (Token_list[index++]);
 		expr* right = parse_prefix(Token_list, index);
-		left = new binary_expr { map[sym->TYPE], left, right, left->BEGIN, right->END };
+		left = new binary_expr { map[sym->Type], left, right, left->BEGIN, right->END };
 	}
 	return left;
 }
 
 expr* parse_plus_minus(const token_list& Token_list, int& index) {
-	static std::map<token_type, binary_expr::type> map = {
-		{ token_type::PLUS, binary_expr::type::addition },
-		{ token_type::MINUS, binary_expr::type::subtraction },
+	static std::map<token_symbol::type, binary_expr::type> map = {
+		{ token_symbol::type::PLUS, binary_expr::type::addition },
+		{ token_symbol::type::MINUS, binary_expr::type::subtraction },
 	};
 
 	expr* left = parse_multi_divis(Token_list, index);
-	while (map.find(Token_list[index]->TYPE) != map.end()) { // ++?
-		auto sym = Token_list[index++]; // auto* ?
+	while (dynamic_cast<token_symbol*> (Token_list[index]) != NULL && map.find((dynamic_cast<token_symbol*> (Token_list[index]))->Type) != map.end()) {
+		auto sym = dynamic_cast<token_symbol*> (Token_list[index++]);
 		expr* right = parse_multi_divis(Token_list, index);
-		left = new binary_expr { map[sym->TYPE], left, right, left->BEGIN, right->END };
+		left = new binary_expr { map[sym->Type], left, right, left->BEGIN, right->END };
 	}
 	return left;
 }

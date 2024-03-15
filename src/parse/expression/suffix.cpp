@@ -28,7 +28,7 @@ expr* parse_suffix(const token_list& Token_list, int& index, expr* item) {
 
 	while (true) {
 
-		if (Token_list[index]->TYPE == token_type::OPEN_PAREN) {
+		if (check_symbol_if(Token_list[index], token_symbol::type::PAREN_LEFT)) {
 			index += 1;
 			auto caller = parse_callation(Token_list, index); // @index+1
 			item = new expr_callation { item, caller, item->BEGIN, caller->END };
