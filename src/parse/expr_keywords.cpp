@@ -10,31 +10,23 @@ expr* parse_expr_keywords(const token_list& Token_list, int& index) {
 	if (kw->Type == token_keyword::type::IMPORT) {
 		int begin = Token_list[index]->BEGIN;
 
-		if (Token_list[index]->TYPE == token_type::OPEN_PAREN) {
-			index += 1;
-			expr* path = parse_expression(Token_list, index);
+		check_symbol(Token_list, index, token_symbol::type::PAREN_LEFT);
 
-			import* result;
-			// check if path formally valid
-			if (dynamic_cast<expr_string*> (path) != NULL) {
-				result = new import { dynamic_cast<expr_string*> (path), begin, index };
-			}
-			else {
-				throw "import path must be literal_string";
-			}
+		expr* path = parse_expression(Token_list, index);
 
-			if (Token_list[index]->TYPE == token_type::CLOSE_PAREN) {
-				index += 1;
-			}
-			else {
-				throw "expect close paren";
-			}
-
-			return result;
+		import* result;
+		// check if path formally valid
+		if (dynamic_cast<expr_string*> (path) != NULL) {
+			result = new import { dynamic_cast<expr_string*> (path), begin, index };
 		}
 		else {
-			throw "expect open paren";
-		}
+			throw "import path must be literal_string";
+		}// import()
+
+		check_symbol(Token_list, index, token_symbol::type::PAREN_RIGHT);
+
+		return result;
+
 	}
 
 	else if (kw->Type == token_keyword::type::NAMESPACE) {

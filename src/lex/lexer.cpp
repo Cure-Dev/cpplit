@@ -92,7 +92,7 @@ namespace pats {
 
 };
 
-std::map<std::wstring, token_symbol::type> new_symbol_map = {
+trie<token_symbol::type> new_symbol_map = {
 
 	{ L"@", token_symbol::type::AT },
 	{ L"?", token_symbol::type::QUESTION },
@@ -229,7 +229,7 @@ token_list lex(std::wstring filepath) {
 	token_list Token_list;
 	std::wstring src = read(filepath, coding::UTF_8);
 
-	Token_list.push_back(new token_symbol {token_type::BOF_, 0, 0});
+	Token_list.push_back(new token_symbol {token_type::BOF_, token_symbol::type::BOF_, 0, 0});
 
 	int length = src.length();
 
@@ -265,7 +265,7 @@ token_list lex(std::wstring filepath) {
 		// EOL
 		else if (src[i] == L'\u000A' || src[i] == L'\u000D' || src[i] == L'\u0085') { // LF || CR || NEL
 			if (Token_list.back()->TYPE != token_type::EOL_) {
-				Token_list.push_back(new token_symbol {token_type::EOL_, begin, i});
+				Token_list.push_back(new token_symbol {token_type::EOL_, token_symbol::type::EOL_, begin, i});
 			}
 			i += 1;
 		}
@@ -334,8 +334,10 @@ token_list lex(std::wstring filepath) {
 
 		// token.symbol
 		else if (symbol_map.include(src[i])) {
+			int oi = i;
 			token_type val = symbol_map.get_match(src, i);
-			Token_list.push_back(new token_symbol { val, begin, i });
+			i = oi;
+			Token_list.push_back(new token_symbol { val, new_symbol_map.get_match(src, i), begin, i });
 		}
 
 		else {
@@ -344,7 +346,7 @@ token_list lex(std::wstring filepath) {
 
 	}
 
-	Token_list.push_back(new token_symbol {token_type::EOF_, length, length});
+	Token_list.push_back(new token_symbol {token_type::EOF_, token_symbol::type::EOF_, length, length});
 	return Token_list;
 
 }

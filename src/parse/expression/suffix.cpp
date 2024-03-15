@@ -6,12 +6,15 @@ arg_list* parse_callation(const token_list& Token_list, int& index) {
 	std::vector<expr*> result;
 
 	int begin = Token_list[index]->BEGIN;
-	while (Token_list[index]->TYPE != token_type::CLOSE_PAREN) {
+	while (!check_symbol_if(Token_list[index], token_symbol::type::PAREN_RIGHT)) {
 		result.push_back(parse_expression(Token_list, index));
-		if (Token_list[index]->TYPE == token_type::COMMA) {
+
+		if (check_symbol_if(Token_list[index], token_symbol::type::COMMA)) {
 			index += 1;
 		}
-		else if (Token_list[index]->TYPE == token_type::CLOSE_PAREN) { /* pass */ }
+		else if (check_symbol_if(Token_list[index], token_symbol::type::PAREN_RIGHT)) {
+			// pass
+		}
 		else {
 			throw new unexpect_token {1,1};
 		}
@@ -31,7 +34,7 @@ expr* parse_suffix(const token_list& Token_list, int& index, expr* item) {
 			item = new expr_callation { item, caller, item->BEGIN, caller->END };
 		}
 
-		else if (Token_list[index]->TYPE == token_type::DOT) {
+		else if (check_symbol_if(Token_list[index], token_symbol::type::DOT)) {
 			index += 1;
 			if (dynamic_cast<token_identifier*> (Token_list[index]) != NULL) {
 				item = new member_access { item, dynamic_cast<token_identifier*> (Token_list[index]), item->BEGIN, Token_list[index]->END };

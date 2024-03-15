@@ -5,7 +5,7 @@ defination* parse_defination(const token_list& Token_list, int& index) {
 		token_identifier* id = dynamic_cast<token_identifier*> (Token_list[index]);
 		index += 1;
 
-		if (Token_list[index]->TYPE == token_type::EQUAL) {
+		if (check_symbol_if(Token_list[index], token_symbol::type::EQUAL)) {
 			index += 1;
 
 			auto val = parse_expression(Token_list, index);

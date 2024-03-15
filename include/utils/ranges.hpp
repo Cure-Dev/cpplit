@@ -1,12 +1,15 @@
 #include <vector>
-#include <utility>
+#include <algorithm>
 
 #ifndef _UTILS_RANGES_HPP_
 #define _UTILS_RANGES_HPP_
 
 class ranges {
 public:
-	ranges(std::initializer_list<std::pair<int, int>> Ranges) {
+	ranges(std::initializer_list<std::pair<int, int>> init_list) {
+
+        std::vector<std::pair<int, int>> Ranges = init_list;
+        std::sort(Ranges.begin(), Ranges.end(), [] (const std::pair<int, int>& a, const std::pair<int, int>& b) { return a.first < b.first; });
 		for (auto range : Ranges) {
 			this->Ranges.push_back(range);
 		}

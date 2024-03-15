@@ -32,4 +32,8 @@ conditional_branches* parse_ifs(const token_list& Token_list, int& index);
 
 loop_statement* parse_loop(const token_list& Token_list, int& index);
 
+
+void check_symbol(const token_list& Token_list, int& index, token_symbol::type Type);
+bool check_symbol_if(token* Token, token_symbol::type Type);
+
 #endif

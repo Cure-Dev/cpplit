@@ -2,48 +2,23 @@
 
 TYPE_namespace* parse_namespace(const token_list& Token_list, int& index) {
 
-	if (Token_list[index]->TYPE == token_type::OPEN_BRACE) {
-		index += 1;
-		defination_block* block = parse_defination_block(Token_list, index);
+	check_symbol(Token_list, index, token_symbol::type::BRACE_LEFT);
 
-		if (Token_list[index]->TYPE == token_type::CLOSE_BRACE) {
-			index += 1;
-		}
-		else {
-			throw "expect close brace";
-		}
+	defination_block* block = parse_defination_block(Token_list, index);
 
-		return new TYPE_namespace { block, block->BEGIN, block->END };
-	}
-	else {
-		throw "expect open brace";
-	}
+	check_symbol(Token_list, index, token_symbol::type::BRACE_RIGHT);
+
+	return new TYPE_namespace { block, block->BEGIN, block->END };
 
 }
 
 conditional_branch* parse_if(const token_list& Token_list, int& index) {
-	if (Token_list[index]->TYPE == token_type::OPEN_PAREN) {
-		index += 1;
-	}
-	else {
-		throw "expect open paren";
-	}
 
+	check_symbol(Token_list, index, token_symbol::type::PAREN_LEFT);
 	expr* Condition = parse_expression(Token_list, index);
+	check_symbol(Token_list, index, token_symbol::type::PAREN_RIGHT);
 
-	if (Token_list[index]->TYPE == token_type::CLOSE_PAREN) {
-		index += 1;
-	}
-	else {
-		throw "expect close paren";
-	}
-
-	if (Token_list[index]->TYPE == token_type::OPEN_BRACE) {
-		index += 1;
-	}
-	else {
-		throw "expect open brace";
-	}
+	check_symbol(Token_list, index, token_symbol::type::BRACE_LEFT);
 
 	execution_block* block = parse_execution_block(Token_list, index);
 
@@ -52,12 +27,7 @@ conditional_branch* parse_if(const token_list& Token_list, int& index) {
 
 conditional_branch* parse_else(const token_list& Token_list, int& index) {
 
-	if (Token_list[index]->TYPE == token_type::OPEN_BRACE) {
-		index += 1;
-	}
-	else {
-		throw "expect open brace";
-	}
+	check_symbol(Token_list, index, token_symbol::type::BRACE_LEFT);
 
 	execution_block* block = parse_execution_block(Token_list, index);
 
@@ -93,28 +63,11 @@ conditional_branches* parse_ifs(const token_list& Token_list, int& index) {
 
 condition_loop* parse_condition_loop(const token_list& Token_list, int& index) {
 
-	if (Token_list[index]->TYPE == token_type::OPEN_PAREN) {
-		index += 1;
-	}
-	else {
-		throw "expect open paren";
-	}
-
+	check_symbol(Token_list, index, token_symbol::type::PAREN_LEFT);
 	expr* Condition = parse_expression(Token_list, index);
+	check_symbol(Token_list, index, token_symbol::type::PAREN_RIGHT);
 
-	if (Token_list[index]->TYPE == token_type::CLOSE_PAREN) {
-		index += 1;
-	}
-	else {
-		throw "expect close paren";
-	}
-
-	if (Token_list[index]->TYPE == token_type::OPEN_BRACE) {
-		index += 1;
-	}
-	else {
-		throw "expect open brace";
-	}
+	check_symbol(Token_list, index, token_symbol::type::BRACE_LEFT);
 
 	execution_block* block = parse_execution_block(Token_list, index);
 
