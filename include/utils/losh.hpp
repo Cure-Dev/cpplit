@@ -53,6 +53,26 @@ public:
 		return result;
 	}
 
+	bool is(std::wstring name) {
+		bool result = false;
+		if (this->has_static() && this->static_args[pointer] == name) {
+			result = true;
+			pointer += 1;
+		}
+		return result;
+	}
+
+	bool hasnt() {
+		bool result;
+		if (this->pointer >= this->static_args.size()) {
+			result = true;
+		}
+		else {
+			result = false;
+		}
+		return result;
+	}
+
 	bool has_static() {
 		if (this->pointer >= this->static_args.size()) {
 			return false;
@@ -62,7 +82,7 @@ public:
 		}
 	}
 
-	std::wstring get_static() {
+	std::wstring get_static() { // next
 		return this->static_args[this->pointer++]; // ++
 	}
 

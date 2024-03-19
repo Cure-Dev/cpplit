@@ -33,77 +33,72 @@ int main(int argc, char** args) {
     losh command = { argc, args };
 
     try {
-        std::wstring cmd;
 
-        if (command.has_static()) {
-            cmd = command.get_static();
+        if (command.is(L"lex") || command.is(L"词法分析")) {
+            std::wstring filepath;
 
-            if (cmd == L"lex" || cmd == L"词法分析") {
-                std::wstring filepath;
-
-                if (command.has_static()) {
-                    filepath = command.get_static();
-                }
-                else {
-                    throw new missing_argument { L"filepath" };
-                }
-
-                // bool color;
-                std::wstring o = lex(filepath).view();
-                std::wcout << rmansi(o) << std::endl;                
-            
+            if (command.has_static()) {
+                filepath = command.get_static();
             }
-
-            else if (cmd == L"parse") {
-                std::wstring filepath;
-
-                if (command.has_static()) {
-                    filepath = command.get_static();
-                }
-                else {
-                    throw new missing_argument { L"filepath" };
-                }
-                
-                node* ast = parse_exe(filepath);
-                std::wstring o = ast->view();
-                std::wcout << rmansi(o);
-                
-            }
-
-            else if (cmd == L"run") {
-                std::wstring filepath;
-
-                if (command.has_static()) {
-                    filepath = command.get_static();
-                }
-                else {
-                    throw new missing_argument { L"filepath" };
-                }
-
-                execution_block* ast = parse_exe(filepath);
-
-                auto env = environment {};
-                ast->exec(env);
-
-            }
-
-            else if (cmd == L"test") {
-        /*        auto ofunc = new lit_io_output {};
-                ofunc->call({ new semantic_object_builtin_string { L"hello, world!" } });
-
-                auto var_list = environment {};
-                var_list.insert({ L"val", new semantic_object_builtin_string { L"hello, world!" }});*/
-                
-            }
-
             else {
-                throw new unknown_command { cmd };
+                throw new missing_argument { L"filepath" };
             }
+
+            // bool color;
+            std::wstring o = lex(filepath).view();
+            std::wcout << rmansi(o) << std::endl;                
+        
+        }
+
+        else if (command.is(L"parse")) {
+            std::wstring filepath;
+
+            if (command.has_static()) {
+                filepath = command.get_static();
+            }
+            else {
+                throw new missing_argument { L"filepath" };
+            }
+            
+            node* ast = parse_exe(filepath);
+            std::wstring o = ast->view();
+            std::wcout << rmansi(o);
+            
+        }
+
+        else if (command.is(L"run")) {
+            std::wstring filepath;
+
+            if (command.has_static()) {
+                filepath = command.get_static();
+            }
+            else {
+                throw new missing_argument { L"filepath" };
+            }
+
+            execution_block* ast = parse_exe(filepath);
+
+            auto env = environment {};
+            ast->exec(env);
+
+        }
+
+        else if (command.is(L"test")) {
+    /*        auto ofunc = new lit_io_output {};
+            ofunc->call({ new semantic_object_builtin_string { L"hello, world!" } });
+
+            auto var_list = environment {};
+            var_list.insert({ L"val", new semantic_object_builtin_string { L"hello, world!" }});*/
+            
+        }
+        
+        else if (command.hasnt()) {
+            // std::wcout << "introductions\n";
+            help(command);
         }
 
         else {
-            // std::wcout << "introductions\n";
-            help(command);
+            throw new unknown_command { command.get_static() };
         }
     }
     catch (exception* e) {
