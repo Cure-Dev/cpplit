@@ -165,12 +165,7 @@ public:
 	}
 
 	semantic_node* eval(environment env) {
-		if (env.find(this->VALUE->VALUE) != env.end()) {
-			return env[this->VALUE->VALUE];
-		}
-		else {
-			throw "undefined identifier";
-		}
+		return env.get(this->VALUE->VALUE);
 	}
 };
 

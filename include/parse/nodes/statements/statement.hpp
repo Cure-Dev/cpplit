@@ -58,7 +58,7 @@ public:
 	}
 
 	void exec(environment& env) {
-		env.insert({ this->IDENTIFIER->VALUE, this->VALUE->eval(env) });
+		env.add(this->IDENTIFIER->VALUE, this->VALUE->eval(env));
 	}
 };
 
