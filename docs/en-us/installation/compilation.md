@@ -48,18 +48,31 @@ You can download or compile dependencies for platforms you need. The dependencie
 | Name | Necessity | URL |
 |:----:|:---------:|:---:|
 | GMP  | Required  | <https://gmplib.org> |
-| codec| Required  | <https://github.com/litlang/codec> |
-| losh | Required  | <https://github.com/litlang/losh> |
-| number_converter | Required  | <https://github.com/litlang/number_converter> |
-|ranges| Required  | <https://github.com/litlang/utils> |
-| trie | Required  | <https://github.com/litlang/utils> |
+| codec| Required  | <https://github.com/litlang/cpp-codec> |
+| losh | Required  | <https://github.com/litlang/cpp-losh> |
+| number_converter | Required  | <https://github.com/litlang/cpp-number_converter> |
+|ranges| Required  | <https://github.com/litlang/cpp-ranges> |
+| trie | Required  | <https://github.com/litlang/cpp-trie> |
 
 If you don't want to collect them by yourself, you can download them all from <https://github.com/litlang/cpplit-deps>.  
 The filename format is `<project-name>/<os>-<cpu-arch>-<os-bit-arch>.zip`, such as `losh/linux-x86-64.zip`.
 
-Tips: I use JSdelivr to download them from github.
-
 Then, put them into deps/ directory. (e.g. deps/losh)
+
+Otherwise, run this one-click srcipt to setup workspace dependencies.
+
+```bash
+curl https://raw.githubusercontent.com/litlang/cpplit-deps/main/setup.sh | bash -s <platform> <destination>
+```
+
+If there is a reason cause you cannot connect to raw.githubusercontent.com or it's speed is too slow, you can set the environment argument `registry` to use another download source like JSDelivr.
+
+Example:
+
+```bash
+curl https://cdn.jsdelivr.net/gh/litlang/cpplit-deps/setup.sh | registry=https://cdn.jsdelivr.net/gh/litlang/cpplit-deps bash -s linux-x86-64
+```
+
 
 ## CMake Compilation
 
