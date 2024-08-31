@@ -32,6 +32,9 @@
 #include "char_stream.hpp"
 #include "string_char_stream.hpp"
 
+#include "rtenv.hpp" // scanner/rtenv.hpp
+#include "file_input_device.hpp"
+
 static void test() {
     // 初始化两个大数
     mpz_class a, b, c;
@@ -80,6 +83,8 @@ int main(int argc, char** args) {
             }
 
             // bool color;
+            lang = language::zh_cn;
+            device = new file_input_device(filepath);
             
             string_char_stream Char_stream = read_file(filepath, codec_type::UTF_8);
             std::wstring o = scan(&Char_stream).view();

@@ -18,6 +18,8 @@
 #include "position.hpp"
 #include "trie.hpp"
 
+#include "rtenv.hpp"
+
 ranges identifier_charset = {
 
 	{ 65, 90 },  // A-Z
