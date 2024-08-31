@@ -33,6 +33,7 @@
 #include "string_char_stream.hpp"
 
 #include "scanner/rtenv.hpp"
+#include "scanner/exceptions/lexical_errors.hpp"
 #include "file_input_device.hpp"
 
 static void test() {
@@ -72,7 +73,7 @@ int main(int argc, char** args) {
 
     try {
 
-        if (command.is(L"lex") || command.is(L"词法分析")) {
+        if (command.is(L"lex") || command.is(L"词法分析")) {  //!!
             std::wstring filepath;
 
             if (command.has_static()) {
@@ -173,6 +174,11 @@ int main(int argc, char** args) {
 
     catch (std::wstring e) {
         std::wcerr << e << std::endl;
+        return 1;
+    }
+
+    catch (lexical_error* e) { //!!
+        std::wcerr << e->msg(language::en_us);
         return 1;
     }
     // std except

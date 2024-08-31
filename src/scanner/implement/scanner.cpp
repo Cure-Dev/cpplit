@@ -11,7 +11,7 @@
 #include "tokens/keyword.hpp"
 #include "tokens/symbol.hpp"
 
-#include "exceptions/lex_errors.hpp"
+#include "exceptions/lexical_errors.hpp"
 
 #include "ranges.hpp"
 
@@ -204,13 +204,14 @@ token_list scan(char_stream* src) {
 
 		// comments.sharp_comments
 		if (src->peek() == L'#') {
-
-			do {
-				src->next();
-				// if (i >= length) {
-				// 	throw new unterminated_comments { filepath, position_format(src, i) };
-				// }
-			} while (src->peek() != L'#');
+			try {
+				do {
+					src->next();
+				} while (src->peek() != L'#');
+			}
+			catch (const char* e) { //!!
+				throw new lexical_errors::unterminated_comments { device };
+			}
 			src->next();
 		}
 
