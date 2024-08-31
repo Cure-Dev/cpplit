@@ -32,7 +32,7 @@
 #include "char_stream.hpp"
 #include "string_char_stream.hpp"
 
-#include "rtenv.hpp" // scanner/rtenv.hpp
+#include "scanner/rtenv.hpp"
 #include "file_input_device.hpp"
 
 static void test() {
