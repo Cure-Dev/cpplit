@@ -66,6 +66,20 @@ static void test() {
 
 }
 
+token_list ui_scan_thread(char_stream* Char_stream, input_device* device, losh& command) {
+    // bool color; // cross-module
+    // lang = language::zh_cn;
+    try {
+        ::device = device;
+        return scan(Char_stream);
+    }
+
+    catch (lexical_error* e) {
+        std::wcerr << e->msg(language::en_us);
+        exit(1);
+    }
+}
+
 int main(int argc, char** args) {
 
     std::locale::global(std::locale(""));
@@ -82,14 +96,10 @@ int main(int argc, char** args) {
             else {
                 throw new missing_argument { L"filepath" };
             }
-
-            // bool color;
-            lang = language::zh_cn;
-            device = new file_input_device(filepath);
             
-            string_char_stream Char_stream = read_file(filepath, codec_type::UTF_8);
-            std::wstring o = scan(&Char_stream).view();
-            std::wcout << o << std::endl;                
+            char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
+            token_list Token_list = ui_scan_thread(Char_stream, new file_input_device(filepath), command);
+            std::wcout << Token_list.view() << std::endl;                
         
         }
 
@@ -103,8 +113,8 @@ int main(int argc, char** args) {
                 throw new missing_argument { L"filepath" };
             }
             
-            string_char_stream Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = scan(&Char_stream);
+            char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
+            token_list Token_list = ui_scan_thread(Char_stream, new file_input_device(filepath), command);
             node* ast = parse_exe(Token_list);
             std::wstring o = ast->view();
             std::wcout << o;
@@ -126,8 +136,8 @@ int main(int argc, char** args) {
             Runtime.working_directory = std::filesystem::current_path();
             Runtime.debug.lang = language::en_us;
 
-            string_char_stream Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = scan(&Char_stream);
+            char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
+            token_list Token_list = ui_scan_thread(Char_stream, new file_input_device(filepath), command);
             statement* ast = parse_exe(Token_list);
 
             auto env = environment {};
@@ -174,11 +184,6 @@ int main(int argc, char** args) {
 
     catch (std::wstring e) {
         std::wcerr << e << std::endl;
-        return 1;
-    }
-
-    catch (lexical_error* e) { //!!
-        std::wcerr << e->msg(language::en_us);
         return 1;
     }
     // std except

@@ -29,9 +29,9 @@ namespace lexical_errors {
 		std::wstring body(language lang) {
 			switch (lang) {
 			case language::zh_cn:
-				return L"错误：未终结的注释\n";
+				return L"词法错误：未终结的注释\n";
 			default:
-				return L"error: unterminated comments\n";
+				return L"lexical error: unterminated comments\n";
 			}
 		}
 	};

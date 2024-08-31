@@ -6,4 +6,4 @@
 #include "language.hpp"
 
 extern thread_local input_device* device;
-thread_local static language lang;
+extern thread_local language lang;
