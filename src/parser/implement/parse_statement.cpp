@@ -1,7 +1,7 @@
 #include "parse_expression.hpp"
 
 #include "parse_if.hpp"
-#include "loop/parse_loop.hpp"
+#include "parse_loop.hpp"
 #include "check.hpp"
 
 #include "ast/statements/expr_statement.hpp"

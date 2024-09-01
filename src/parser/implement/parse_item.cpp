@@ -36,7 +36,7 @@ expr_entity* make_entity(token_entity* Token) {
 }
 
 #include "parse_import.hpp"
-#include "namespace/parse_namespace.hpp"
+#include "parse_namespace.hpp"
 #include "parse_func.hpp"
 
 expr* parse_miditem(token_list& Token_list) {
