@@ -32,6 +32,10 @@
 #include "char_stream.hpp"
 #include "string_char_stream.hpp"
 
+#include "scanner/rtenv.hpp"
+#include "scanner/exceptions/lexical_errors.hpp"
+#include "file_input_device.hpp"
+
 static void test() {
     // 初始化两个大数
     mpz_class a, b, c;
@@ -62,6 +66,27 @@ static void test() {
 
 }
 
+token_list ui_scan_thread(char_stream* Char_stream, input_device* device, const losh& command) {
+    // bool color; // cross-module
+    // lang = language::zh_cn;
+    try {
+        ::device = device;
+        return scan(Char_stream);
+    }
+
+    catch (lexical_error* e) {
+        std::wcerr << e->msg(language::en_us);
+        exit(1);
+    }
+}
+
+#include <future>
+token_list ui_scan(char_stream* Char_stream, input_device* device, losh& command) { // 有效吗
+    std::future<token_list> scan_thread = std::async(std::launch::async, [Char_stream, device, command] { return ui_scan_thread(Char_stream, device, command);});
+    token_list result = scan_thread.get();
+    return result;
+}
+
 int main(int argc, char** args) {
 
     std::locale::global(std::locale(""));
@@ -69,7 +94,7 @@ int main(int argc, char** args) {
 
     try {
 
-        if (command.is(L"lex") || command.is(L"词法分析")) {
+        if (command.is(L"lex") || command.is(L"词法分析")) {  //!!
             std::wstring filepath;
 
             if (command.has_static()) {
@@ -78,12 +103,10 @@ int main(int argc, char** args) {
             else {
                 throw new missing_argument { L"filepath" };
             }
-
-            // bool color;
             
-            string_char_stream Char_stream = read_file(filepath, codec_type::UTF_8);
-            std::wstring o = scan(&Char_stream).view();
-            std::wcout << o << std::endl;                
+            char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
+            token_list Token_list = ui_scan(Char_stream, new file_input_device(filepath), command);
+            std::wcout << Token_list.view() << std::endl;                
         
         }
 
@@ -97,8 +120,8 @@ int main(int argc, char** args) {
                 throw new missing_argument { L"filepath" };
             }
             
-            string_char_stream Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = scan(&Char_stream);
+            char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
+            token_list Token_list = ui_scan(Char_stream, new file_input_device(filepath), command);
             node* ast = parse_exe(Token_list);
             std::wstring o = ast->view();
             std::wcout << o;
@@ -120,8 +143,8 @@ int main(int argc, char** args) {
             Runtime.working_directory = std::filesystem::current_path();
             Runtime.debug.lang = language::en_us;
 
-            string_char_stream Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = scan(&Char_stream);
+            char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
+            token_list Token_list = ui_scan(Char_stream, new file_input_device(filepath), command);
             statement* ast = parse_exe(Token_list);
 
             auto env = environment {};

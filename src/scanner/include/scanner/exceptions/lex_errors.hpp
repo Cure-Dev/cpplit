@@ -12,10 +12,10 @@
 #include "number_convert.hpp"
 
 
-class lexical_error : public exception {
+class lex_error : public exception {
 public:
 
-	lexical_error(std::wstring filepath, position pos) : filepath(filepath), pos(pos) {};
+	lex_error(std::wstring filepath, position pos) : filepath(filepath), pos(pos) {};
 	position pos; // character error
 	std::wstring filepath;
 
@@ -43,9 +43,9 @@ private:
 
 };
 
-class invalid_character : public lexical_error {
+class invalid_character : public lex_error {
 public:
-	invalid_character(std::wstring filepath, position pos, wchar_t ch) : lexical_error(filepath, pos), Char(ch) {};
+	invalid_character(std::wstring filepath, position pos, wchar_t ch) : lex_error(filepath, pos), Char(ch) {};
 	wchar_t Char;
 
 	std::wstring body(language L) {
@@ -64,9 +64,9 @@ public:
 
 // undefined symbol
 
-class unterminated_comments : public lexical_error {
+class unterminated_comments : public lex_error {
 public:
-	unterminated_comments(std::wstring filepath, position pos) : lexical_error(filepath, pos) {};
+	unterminated_comments(std::wstring filepath, position pos) : lex_error(filepath, pos) {};
 
 	std::wstring body(language L) {
 		std::wstringstream result;
@@ -81,9 +81,9 @@ public:
 	}
 };
 
-class invalid_escape : public lexical_error {
+class invalid_escape : public lex_error {
 public:
-	invalid_escape(std::wstring filepath, position pos) : lexical_error(filepath, pos) {};
+	invalid_escape(std::wstring filepath, position pos) : lex_error(filepath, pos) {};
 
 	std::wstring body(language L) {
 		std::wstringstream result;
@@ -98,9 +98,9 @@ public:
 	}
 };
 
-class invalid_string_escape : public lexical_error {
+class invalid_string_escape : public lex_error {
 public:
-	invalid_string_escape(std::wstring filepath, position pos) : lexical_error(filepath, pos) {};
+	invalid_string_escape(std::wstring filepath, position pos) : lex_error(filepath, pos) {};
 
 	std::wstring body(language L) {
 		std::wstringstream result;
@@ -114,9 +114,9 @@ public:
 	}
 };
 
-class unclosed_string : public lexical_error {
+class unclosed_string : public lex_error {
 public:
-	unclosed_string(int begin, int end) : lexical_error(L"", {-1,-1}) {};
+	unclosed_string(int begin, int end) : lex_error(L"", {-1,-1}) {};
 
 	std::wstring body(language L) {
 		return L"unclosed_string";

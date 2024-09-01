@@ -65,10 +65,13 @@ list(FILTER SCANNER_SOURCES EXCLUDE REGEX ".*old\\.cpp$")
 add_library(${PROJECT_NAME}_scanner STATIC ${SCANNER_SOURCES}) # scanner_lib?
 
 target_include_directories(${PROJECT_NAME}_scanner INTERFACE "${SCANNER_DIR}/interface")
-target_include_directories(${PROJECT_NAME}_scanner PUBLIC "${SCANNER_DIR}/include")
+target_include_directories(${PROJECT_NAME}_scanner INTERFACE "${SCANNER_DIR}/include")
+target_include_directories(${PROJECT_NAME}_scanner PRIVATE "${SCANNER_DIR}/include/scanner")
 target_include_directories(${PROJECT_NAME}_scanner PRIVATE "${SCANNER_DIR}/internal")
 
 target_include_directories(${PROJECT_NAME}_scanner PUBLIC "${SOURCE_DIR}/char_stream/include")
+target_include_directories(${PROJECT_NAME}_scanner PUBLIC "${SOURCE_DIR}/input_device/include")
+target_include_directories(${PROJECT_NAME}_scanner PRIVATE "${SOURCE_DIR}/reader/include") #!
 
 target_include_directories(${PROJECT_NAME}_scanner PRIVATE ${CODEC_DIR}/include)
 target_include_directories(${PROJECT_NAME}_scanner PRIVATE ${NUMBER_CONVERTER_DIR}/include)
@@ -146,6 +149,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${LOSH_DIR}/include) #ui
 target_link_libraries(${PROJECT_NAME} ${LOSH_LIBRARY})
 
 target_link_libraries(${PROJECT_NAME} ${GMPXX_LIBRARY} ${GMP_LIBRARY}) # ui temp?
+target_include_directories(${PROJECT_NAME} PRIVATE ${NUMBER_CONVERTER_DIR}/include) #
 
 install(
   TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_scanner ${PROJECT_NAME}_parser

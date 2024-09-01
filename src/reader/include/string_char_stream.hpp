@@ -7,7 +7,7 @@ public:
 	string_char_stream(std::wstring data) : data(data), length(data.length()) {};
 
 	wchar_t peek() {
-		return this->data[this->index];
+		return this->data[this->index]; // throw exception if reach eof?
 	}
 
 	wchar_t get() {
@@ -17,7 +17,7 @@ public:
 	}
 
 	bool is_end() { // has_next
-		if (this->index == this->length) {
+		if (this->index == this->length) { //!
 			return true;
 		}
 		else {
