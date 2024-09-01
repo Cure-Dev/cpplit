@@ -66,7 +66,7 @@ static void test() {
 
 }
 
-token_list ui_scan_thread(char_stream* Char_stream, input_device* device, losh& command) {
+token_list ui_scan_thread(char_stream* Char_stream, input_device* device, const losh& command) {
     // bool color; // cross-module
     // lang = language::zh_cn;
     try {
@@ -78,6 +78,13 @@ token_list ui_scan_thread(char_stream* Char_stream, input_device* device, losh& 
         std::wcerr << e->msg(language::en_us);
         exit(1);
     }
+}
+
+#include <future>
+token_list ui_scan(char_stream* Char_stream, input_device* device, losh& command) {
+    std::future<token_list> scan_thread = std::async(std::launch::async, [Char_stream, device, command] { return ui_scan_thread(Char_stream, device, command);});
+    token_list result = scan_thread.get();
+    return result;
 }
 
 int main(int argc, char** args) {
@@ -98,7 +105,7 @@ int main(int argc, char** args) {
             }
             
             char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = ui_scan_thread(Char_stream, new file_input_device(filepath), command);
+            token_list Token_list = ui_scan(Char_stream, new file_input_device(filepath), command);
             std::wcout << Token_list.view() << std::endl;                
         
         }
@@ -114,7 +121,7 @@ int main(int argc, char** args) {
             }
             
             char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = ui_scan_thread(Char_stream, new file_input_device(filepath), command);
+            token_list Token_list = ui_scan(Char_stream, new file_input_device(filepath), command);
             node* ast = parse_exe(Token_list);
             std::wstring o = ast->view();
             std::wcout << o;
@@ -137,7 +144,7 @@ int main(int argc, char** args) {
             Runtime.debug.lang = language::en_us;
 
             char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = ui_scan_thread(Char_stream, new file_input_device(filepath), command);
+            token_list Token_list = ui_scan(Char_stream, new file_input_device(filepath), command);
             statement* ast = parse_exe(Token_list);
 
             auto env = environment {};
