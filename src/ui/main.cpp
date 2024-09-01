@@ -81,7 +81,7 @@ token_list ui_scan_thread(char_stream* Char_stream, input_device* device, const 
 }
 
 #include <future>
-token_list ui_scan(char_stream* Char_stream, input_device* device, losh& command) {
+token_list ui_scan(char_stream* Char_stream, input_device* device, losh& command) { // 有效吗
     std::future<token_list> scan_thread = std::async(std::launch::async, [Char_stream, device, command] { return ui_scan_thread(Char_stream, device, command);});
     token_list result = scan_thread.get();
     return result;

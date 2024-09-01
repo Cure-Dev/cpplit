@@ -19,6 +19,7 @@
 #include "trie.hpp"
 
 #include "rtenv.hpp"
+#include "file_device_position.hpp"
 
 ranges identifier_charset = {
 
@@ -210,7 +211,7 @@ token_list scan(char_stream* src) {
 				} while (src->peek() != L'#');
 			}
 			catch (const char* e) { //!!
-				throw new lexical_errors::unterminated_comments { device };
+				throw new lexical_errors::unterminated_comments { new file_device_point(device, 1, 1) };
 			}
 			src->next();
 		}
