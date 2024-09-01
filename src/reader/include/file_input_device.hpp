@@ -2,6 +2,7 @@
 
 #include "input_device.hpp"
 #include "language.hpp"
+#include "file_device_position.hpp"
 
 class file_input_device : public input_device {
 public:
@@ -16,6 +17,11 @@ public:
 		}
 	}
 
+	file_device_point* get_point() override {
+		return new file_device_point {this, 2, 2};
+	}
+
 private:
 	std::wstring filepath;
+	char_stream* Char_stream;
 };

@@ -2,7 +2,6 @@
 
 #include "device_position.hpp"
 #include "input_device.hpp"
-#include "file_input_device.hpp"
 #include "number_convert.hpp"
 
 class file_device_position : public device_position {

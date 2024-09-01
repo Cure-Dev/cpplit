@@ -211,7 +211,7 @@ token_list scan(char_stream* src) {
 				} while (src->peek() != L'#');
 			}
 			catch (const char* e) { //!!
-				throw new lexical_errors::unterminated_comments { new file_device_point(device, 1, 1) };
+				throw new lexical_errors::unterminated_comments { device->get_point() };
 			}
 			src->next();
 		}

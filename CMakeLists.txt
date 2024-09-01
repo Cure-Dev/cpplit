@@ -149,6 +149,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${LOSH_DIR}/include) #ui
 target_link_libraries(${PROJECT_NAME} ${LOSH_LIBRARY})
 
 target_link_libraries(${PROJECT_NAME} ${GMPXX_LIBRARY} ${GMP_LIBRARY}) # ui temp?
+target_include_directories(${PROJECT_NAME} PRIVATE ${NUMBER_CONVERTER_DIR}/include) #
 
 install(
   TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_scanner ${PROJECT_NAME}_parser

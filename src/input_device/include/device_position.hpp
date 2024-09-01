@@ -4,6 +4,8 @@
 #include "language.hpp"
 #include "input_device.hpp"
 
+class input_device;
+
 class device_position {
 public:
 	device_position(input_device* device) : device(device) {};
