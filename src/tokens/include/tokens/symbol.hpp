@@ -52,7 +52,6 @@ public:
 
 
 		// seperators
-		BOF_,
 		EOL_,
 		EOF_,
 
@@ -80,7 +79,6 @@ public:
 
 	std::wstring view() {
 		static std::map<token_symbol::type, std::wstring> token_to_view = {
-			{ token_symbol::type::BOF_, L"<BOF>" },
 			{ token_symbol::type::EOF_, L"<EOF>" },
 			{ token_symbol::type::EOL_, L"<EOL>" },
 

@@ -197,8 +197,6 @@ token_list scan(char_stream* src) {
 
 	std::vector<token*> Token_list;
 
-	Token_list.push_back(new token_symbol {token_symbol::type::BOF_, 0, 0}); //
-
 	while (!src->is_end()) {
 
 		int begin = src->get_pos();

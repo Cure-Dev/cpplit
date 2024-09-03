@@ -19,7 +19,6 @@ public:
 
 	std::wstring msg(language L) {
 		static std::map<token_symbol::type, std::wstring> map = {
-			{ token_symbol::type::BOF_, L"BOF" },
 			{ token_symbol::type::EOF_, L"EOF" },
 			{ token_symbol::type::EOL_, L"EOL" },
 

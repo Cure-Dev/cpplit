@@ -1,8 +1,6 @@
 #include "parse_statement_block.hpp"
 
-statement_block* parse_exe(token_list Token_list) { // parse main program
-	Token_list.fetch(); // temp pass BOF
-	
+statement_block* parse_exe(token_list Token_list) { // parse main program	
 	return parse_statements(Token_list, token_symbol::type::EOF_);
 }
 

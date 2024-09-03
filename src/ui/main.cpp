@@ -11,7 +11,7 @@
 #include "exceptions/command_errors.hpp"
 
 
-#include "scanner.hpp"
+#include "scanner.hpp" // scan.hpp
 
 #include "parser.hpp"
 #include "ast/node.hpp"
@@ -94,7 +94,7 @@ int main(int argc, char** args) {
 
     try {
 
-        if (command.is(L"lex") || command.is(L"词法分析")) {  //!!
+        if (command.is(L"scan") || command.is(L"词法分析")) {
             std::wstring filepath;
 
             if (command.has_static()) {
