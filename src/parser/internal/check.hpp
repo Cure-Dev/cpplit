@@ -2,7 +2,7 @@
 
 #include "tokens/keyword.hpp"
 #include "tokens/symbol.hpp"
-#include "tokens/token_list.hpp"
+#include "token_list.hpp"
 
 namespace check::symbol {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 
 #include "token.hpp"
 
@@ -32,7 +32,7 @@ public:
 
 	std::wstring view() {
 
-		static std::map<type, std::wstring> keyword_view = {
+		static std::unordered_map<type, std::wstring> keyword_view = {
 
 			{ type::IMPORT, L"import" },
 			{ type::IF, L"if" },

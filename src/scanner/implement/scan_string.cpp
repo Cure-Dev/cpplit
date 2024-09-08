@@ -206,7 +206,7 @@ token_string* lex_string(std::wstring src, int& i, const std::wstring& filepath)
 	return new token_string {val, begin, i};
 }
 
-token_string* scan_string(char_stream* src, const std::wstring& filepath) {
+token_string* scan_string(char_stream* src) {
 	int pos_begin = src->get_pos();
 	wchar_t begin = src->get();
 

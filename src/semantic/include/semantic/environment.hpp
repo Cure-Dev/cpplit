@@ -31,5 +31,5 @@ public:
 	}
 
 private:
-	std::map<std::wstring, semantic_node*> map;
+	std::unordered_map<std::wstring, semantic_node*> map;
 };

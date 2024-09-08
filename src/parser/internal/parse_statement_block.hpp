@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tokens/token_list.hpp"
+#include "token_list.hpp"
 #include "tokens/symbol.hpp"
 #include "ast/statements/statement_block.hpp"
 
