@@ -6,7 +6,7 @@ ranges digit_charset = {
 };
 
 bool number_matched(wchar_t c) {
-	return digit_charset.include(c) ? true : false;
+	return digit_charset.include(c);
 }
 
 token_number* scan_number(char_stream* src) {

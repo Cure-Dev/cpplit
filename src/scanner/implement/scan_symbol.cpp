@@ -84,12 +84,7 @@ trie<token_symbol::type> symbol_map = {
 
 
 bool symbol_matched(wchar_t c) {
-	if (symbol_map.has(c)) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return symbol_map.has(c);
 }
 
 token_symbol* scan_symbol(char_stream* src) {

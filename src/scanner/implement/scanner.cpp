@@ -46,12 +46,6 @@ trie ignore_set = {
 };
 */
 
-std::unordered_set<wchar_t> string_head_set = {
-// global
-	L'\'',
-	L'"',
-};
-
 token_list scan(char_stream* src) {
 
 	std::vector<token*> Token_list;
@@ -113,9 +107,8 @@ token_list scan(char_stream* src) {
 		}
 
 		// string
-		else if (string_head_set.find(src->peek()) != string_head_set.end()) {
-			std::wstring filepath = L".lit"; //
-			Token_list.push_back(scan_string(src, filepath));
+		else if (string_head_matched(src->peek())) {
+			Token_list.push_back(scan_string(src));
 		}
 
 		// entity.literal.number
