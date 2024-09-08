@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "tokens/token_list.hpp"
+#include "token_list.hpp"
 #include "scan_string.hpp"
 
 #include "codec.hpp"
