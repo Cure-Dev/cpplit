@@ -5,6 +5,8 @@
 
 #include "token_list.hpp"
 #include "scan_string.hpp"
+#include "scan_number.hpp"
+#include "scan_symbol.hpp"
 
 #include "codec.hpp"
 
@@ -16,7 +18,6 @@
 #include "ranges.hpp"
 
 #include "position.hpp"
-#include "scan_symbol.hpp"
 
 #include "rtenv.hpp"
 #include "file_device_position.hpp"
@@ -32,10 +33,6 @@ ranges identifier_charset = {
 
 	{ 0x4E00, 0x9FFF }, // chinese characters
 
-};
-
-ranges digit_charset = {
-	{ 48, 57 },
 };
 
 std::unordered_map<std::wstring, token_keyword::type> keyword_map = {
@@ -180,12 +177,8 @@ token_list scan(char_stream* src) {
 		}
 
 		// entity.literal.number
-		else if (digit_charset.include(src->peek())) {
-			std::wstring val;
-			do {
-				val += src->get();
-			} while (digit_charset.include(src->peek()));
-			Token_list.push_back(new token_number { encode(val), begin, src->get_pos() }); //!
+		else if (number_matched(src->peek())) {
+			Token_list.push_back(scan_number(src));
 		}
 
 		// entity.identifier || keyword || literal
