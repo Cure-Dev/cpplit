@@ -85,12 +85,15 @@ token* scan_identifier(char_stream* src) {
 		val = val.substr(0, val.length()-1);
 	}
 
-	if (keyword_map.find(val) != keyword_map.end()) { // is keyword
+	// keyword
+	if (keyword_map.find(val) != keyword_map.end()) {
 		return new token_keyword { keyword_map[val], begin, src->get_pos()};
 	}
+	// literal
 	else if (literal_bool_map.find(val) != literal_bool_map.end()) {
 		return new token_boolean { literal_bool_map[val], begin, src->get_pos() };
 	}
+	// normal identifier
 	else { // is identifier
 		return new token_identifier {val, begin, src->get_pos()};
 	}

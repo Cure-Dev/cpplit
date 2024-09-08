@@ -2,16 +2,16 @@
 #include <vector>
 #include <unordered_set>
 
+#include "tokens/keyword.hpp"
+#include "tokens/symbol.hpp"
 #include "token_list.hpp"
+
 #include "scan_string.hpp"
 #include "scan_number.hpp"
 #include "scan_symbol.hpp"
 #include "scan_identifier.hpp"
 
 #include "codec.hpp"
-
-#include "tokens/keyword.hpp"
-#include "tokens/symbol.hpp"
 
 #include "exceptions/lexical_errors.hpp"
 
@@ -45,6 +45,14 @@ trie ignore_set = {
 	L"\t",
 };
 */
+
+#include <functional>
+std::vector<std::pair<std::function<bool(wchar_t)>, std::function<token*(char_stream*)>>> first_set = {
+	{ symbol_matched, scan_symbol },
+	{ number_matched, scan_number },
+	{ identifier_matched, scan_identifier },
+	{ string_head_matched, scan_string },
+};
 
 token_list scan(char_stream* src) {
 
@@ -106,29 +114,18 @@ token_list scan(char_stream* src) {
 			}
 		}
 
-		// string
-		else if (string_head_matched(src->peek())) {
-			Token_list.push_back(scan_string(src));
-		}
-
-		// entity.literal.number
-		else if (number_matched(src->peek())) {
-			Token_list.push_back(scan_number(src));
-		}
-
-		// entity.identifier || keyword || literal
-		else if (identifier_matched(src->peek())) {
-			Token_list.push_back(scan_identifier(src));
-		}
-
-		// token.symbol
-		else if (symbol_matched(src->peek())) {
-			Token_list.push_back(scan_symbol(src));
-		}
-
 		else {
-			// throw new invalid_character { filepath, position_format(src, i), src[i] };
-			throw "invalid character";
+			bool processed = false;
+			for (auto f : first_set) {
+				if (f.first(src->peek())) {
+					Token_list.push_back(f.second(src));
+					processed = true;
+					break;
+				}
+			}
+			if (!processed) {
+				throw "invalid character";
+			}
 		}
 
 	}
