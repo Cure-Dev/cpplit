@@ -11,7 +11,7 @@
 #include "exceptions/command_errors.hpp"
 
 
-#include "scanner.hpp" // scan.hpp
+#include "scanner/scan.hpp"
 
 #include "parser.hpp"
 #include "ast/node.hpp"
