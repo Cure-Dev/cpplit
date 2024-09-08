@@ -38,7 +38,7 @@ ranges digit_charset = {
 	{ 48, 57 },
 };
 
-std::map<std::wstring, token_keyword::type> keyword_map = {
+std::unordered_map<std::wstring, token_keyword::type> keyword_map = {
 
 // en-us
 	{ L"import", token_keyword::type::IMPORT },
@@ -69,7 +69,7 @@ std::map<std::wstring, token_keyword::type> keyword_map = {
 
 };
 
-std::map<std::wstring, bool> literal_bool_map = {
+std::unordered_map<std::wstring, bool> literal_bool_map = {
 
 // en-us
 	{ L"true", true },

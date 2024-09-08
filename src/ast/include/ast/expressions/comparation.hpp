@@ -18,7 +18,7 @@ public:
 	std::vector<std::pair<type, expr*>> RIGHT;
 
 	std::wstring view() {
-		static std::map<type, std::wstring> to_view = {
+		static std::unordered_map<type, std::wstring> to_view = {
 			{ EQUAL, L"==" }, // u+2a75
 			{ GREATER, L">" },
 			{ LESS, L"<" },

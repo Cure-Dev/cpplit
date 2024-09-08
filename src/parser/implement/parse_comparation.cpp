@@ -4,7 +4,7 @@
 #include "tokens/symbol.hpp"
 #include "ast/expressions/comparation.hpp"
 
-std::map<token_symbol::type, comparation::type> comp_symbol_map = {
+std::unordered_map<token_symbol::type, comparation::type> comp_symbol_map = {
 	{ token_symbol::type::EQUAL_EQUAL, comparation::EQUAL },
 	{ token_symbol::type::GREATER, comparation::GREATER },
 	{ token_symbol::type::LESS, comparation::LESS },

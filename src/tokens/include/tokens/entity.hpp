@@ -39,7 +39,7 @@ public:
 	token_string(std::wstring value, int begin, int end) : token_literal(begin, end), VALUE(value) {};
 
 	std::wstring view() {
-/*		static std::map<wchar_t, std::wstring> replace_map = {
+/*		static std::unordered_map<wchar_t, std::wstring> replace_map = {
 			{ L'\n', L"`U+000A`"},
 		};*/
 		return L"'" + this->VALUE + L"'";

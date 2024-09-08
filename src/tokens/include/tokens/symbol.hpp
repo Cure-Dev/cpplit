@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 
 #include "token.hpp"
 
@@ -78,7 +78,7 @@ public:
 	token_symbol(type Type, int begin, int end) : token(begin, end), Type(Type) {};
 
 	std::wstring view() {
-		static std::map<token_symbol::type, std::wstring> token_to_view = {
+		static std::unordered_map<token_symbol::type, std::wstring> token_to_view = {
 			{ token_symbol::type::EOF_, L"<EOF>" },
 			{ token_symbol::type::EOL_, L"<EOL>" },
 

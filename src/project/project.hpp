@@ -35,8 +35,8 @@ public:
 
 class root_library : public library {
 public:
-	root_library(std::map<std::wstring, project*> subs) : subs(subs) {};
-	std::map<std::wstring, project*> subs;
+	root_library(std::unordered_map<std::wstring, project*> subs) : subs(subs) {};
+	std::unordered_map<std::wstring, project*> subs;
 
 	project* access(std::wstring name) {
 		if (this->subs.find(name) != this->subs.end()) {
