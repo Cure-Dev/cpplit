@@ -16,7 +16,7 @@ class expr : public node {
 public:
 	expr(int begin, int end) : node(begin, end) {};
 
-	virtual semantic_node* eval(environment env, const runtime& Runtime) {
+	virtual semantic_node* eval(identifier_table env, const runtime& Runtime) {
 		throw "pure virtual method";
 	};
 

@@ -6,9 +6,9 @@
 #include "semantic/exceptions/runtime_errors.hpp"
 
 
-class environment { // 符号表
+class identifier_table {
 public:
-	environment() {};
+	identifier_table() {};
 
 /*	semantic_node* operator[](std::wstring name) {
 		return this[name];

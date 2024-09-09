@@ -13,7 +13,7 @@ public:
 		return statement::statement_view(this->IDENTIFIER->view() + L" = " + this->VALUE->view());
 	}
 
-	void exec(environment& env, const runtime& Runtime) {
+	void exec(identifier_table& env, const runtime& Runtime) {
 		env.add(this->IDENTIFIER->VALUE, this->VALUE->eval(env, Runtime));
 	}
 };

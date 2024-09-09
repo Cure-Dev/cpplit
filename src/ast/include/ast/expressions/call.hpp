@@ -4,7 +4,7 @@ class arg_list : public paren_list {
 public:
 	arg_list(std::vector<expr*> items, int begin, int end) : paren_list(items, begin, end) {};
 
-	_builtin_object_tuple* eval(environment env, const runtime& Runtime) {
+	_builtin_object_tuple* eval(identifier_table env, const runtime& Runtime) {
 		std::vector<semantic_object*> result;
 		for (auto item : this->ITEMS) {
 			result.push_back(dynamic_cast<semantic_object*> ((item)->eval(env, Runtime)));
@@ -23,7 +23,7 @@ public:
 		return this->CALLEE->view() + this->CALLER->view();
 	}
 
-	semantic_node* eval(environment env, const runtime& Runtime) {
+	semantic_node* eval(identifier_table env, const runtime& Runtime) {
 		auto callee = this->CALLEE->eval(env, Runtime);
 
 		if (dynamic_cast<semantic_function*> (callee) != NULL) { //

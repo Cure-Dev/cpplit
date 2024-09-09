@@ -1,7 +1,7 @@
 #include "ast/statements/conditional_branch.hpp"
 #include "call_method.hpp"
 
-void conditional_branches::exec(environment env, const runtime& Runtime) {
+void conditional_branches::exec(identifier_table env, const runtime& Runtime) {
 	for (auto branch : this->BRANCHES) {
 		semantic_object* condition = dynamic_cast<semantic_object*> (branch->CONDITION->eval(env, Runtime));
 		semantic_object* interface;

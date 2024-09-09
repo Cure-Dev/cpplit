@@ -12,5 +12,5 @@ public:
 		return this->VALUE->view();
 	}
 
-	semantic_node* eval(environment env, const runtime& Runtime);
+	semantic_node* eval(identifier_table env, const runtime& Runtime);
 };

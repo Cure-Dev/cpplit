@@ -12,6 +12,6 @@ public:
 		return s + L";\n";
 	}
 
-	virtual void exec(environment env, const runtime& Runtime) {}; //!
+	virtual void exec(identifier_table env, const runtime& Runtime) {}; //!
 
 };
