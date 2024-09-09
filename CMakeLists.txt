@@ -115,11 +115,12 @@ target_link_libraries(${PROJECT_NAME}_ast PRIVATE ${PROJECT_NAME}_tokens)
 
 target_include_directories(${PROJECT_NAME}_ast PRIVATE ${CODEC_DIR}/include)
 
-## semantic (data model)
-file(GLOB_RECURSE SEMANTIC_SOURCES "${SOURCE_DIR}/semantic/*.cpp")
+## semantic (computational data model)
+set(MODEL_DIR "${SOURCE_DIR}/semantic")
+file(GLOB_RECURSE SEMANTIC_SOURCES "${MODEL_DIR}/implement/*.cpp")
 list(FILTER SEMANTIC_SOURCES EXCLUDE REGEX ".*old\\.cpp$")
 add_library(${PROJECT_NAME}_semantic STATIC ${SEMANTIC_SOURCES})
-target_include_directories(${PROJECT_NAME}_semantic PUBLIC "${SOURCE_DIR}/semantic/include")
+target_include_directories(${PROJECT_NAME}_semantic PUBLIC "${MODEL_DIR}/include")
 
 target_include_directories(${PROJECT_NAME}_semantic PRIVATE ${CODEC_DIR}/include) # or link library?
 

@@ -3,7 +3,7 @@
 #include <string>
 
 #include "semantic/class.hpp"
-#include "exceptions/runtime_errors.hpp"
+#include "semantic/exceptions/runtime_errors.hpp"
 
 
 class environment { // 符号表
