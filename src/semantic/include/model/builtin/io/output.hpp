@@ -1,9 +1,9 @@
 #pragma once
 
-#include "semantic/class.hpp"
-#include "semantic/fm.hpp"
-#include "semantic/builtin/null.hpp"
-#include "semantic/builtin/string.hpp"
+#include "model/class.hpp"
+#include "model/fm.hpp"
+#include "model/builtin/null.hpp"
+#include "model/builtin/string.hpp"
 
 #include <iostream>
 

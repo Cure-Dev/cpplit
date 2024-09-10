@@ -1,6 +1,6 @@
 #pragma once
 
-#include "semantic/object.hpp"
+#include "model/object.hpp"
 
 static class : public semantic_class {
 public:

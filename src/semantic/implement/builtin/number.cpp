@@ -1,5 +1,5 @@
-#include "semantic/fm.hpp"
-#include "semantic/builtin/number.hpp"
+#include "model/fm.hpp"
+#include "model/builtin/number.hpp"
 
 class _number_init : public semantic_function {
 public:
@@ -23,7 +23,7 @@ auto number_number = new _number_number {};
 
 #include <sstream>
 #include "codec.hpp"
-#include "semantic/builtin/string.hpp"
+#include "model/builtin/string.hpp"
 class _number_output : public semantic_method {
 public:
 	_number_output() : semantic_method(builtin_class_number) {};

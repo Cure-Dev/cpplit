@@ -2,9 +2,9 @@
 
 #include <filesystem>
 
-#include "semantic/builtin/io/output.hpp"
-#include "semantic/builtin/bool.hpp"
-#include "semantic/builtin/string.hpp"
+#include "model/builtin/io/output.hpp"
+#include "model/builtin/bool.hpp"
+#include "model/builtin/string.hpp"
 
 class project {
 public:

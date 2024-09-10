@@ -1,8 +1,8 @@
-#include "semantic/builtin/bool.hpp"
-#include "semantic/builtin/string.hpp"
-#include "semantic/builtin/tuple.hpp"
-#include "semantic/class.hpp"
-#include "semantic/fm.hpp"
+#include "model/builtin/bool.hpp"
+#include "model/builtin/string.hpp"
+#include "model/builtin/tuple.hpp"
+#include "model/class.hpp"
+#include "model/fm.hpp"
 
 #include <vector>
 #include <unordered_map>

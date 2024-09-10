@@ -2,7 +2,7 @@
 
 #include "./node.hpp"
 #include "./object.hpp"
-#include "semantic/builtin/tuple.hpp"
+#include "model/builtin/tuple.hpp"
 class semantic_function : public semantic_node {
 public:
 	semantic_function(semantic_class* type) : return_type(type) {};

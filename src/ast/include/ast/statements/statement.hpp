@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ast/node.hpp"
-#include "semantic/identifier_table.hpp"
+#include "model/identifier_table.hpp"
 #include "runtime.hpp"
 
 class statement : public node {

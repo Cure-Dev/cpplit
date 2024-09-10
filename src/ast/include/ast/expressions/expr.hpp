@@ -7,8 +7,8 @@
 
 #include "ast/node.hpp"
 
-#include "semantic/class.hpp"
-#include "semantic/identifier_table.hpp"
+#include "model/class.hpp"
+#include "model/identifier_table.hpp"
 
 #include "runtime.hpp"
 

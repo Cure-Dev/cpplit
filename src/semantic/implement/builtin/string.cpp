@@ -1,5 +1,5 @@
-#include "semantic/fm.hpp"
-#include "semantic/builtin/string.hpp"
+#include "model/fm.hpp"
+#include "model/builtin/string.hpp"
 
 class _string_init : public semantic_function {
 public:

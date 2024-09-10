@@ -1,4 +1,4 @@
-#include "semantic/class.hpp"
+#include "model/class.hpp"
 
 semantic_node* semantic_class::get_member(std::wstring name) {
 	if (this->members.find(name) != this->members.end()) {

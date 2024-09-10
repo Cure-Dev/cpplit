@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "semantic/class.hpp"
-#include "semantic/exceptions/runtime_errors.hpp"
+#include "model/class.hpp"
+#include "model/exceptions/runtime_errors.hpp"
 
 
 class identifier_table {

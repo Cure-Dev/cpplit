@@ -1,5 +1,5 @@
-#include "semantic/object.hpp"
-#include "semantic/fm.hpp"
+#include "model/object.hpp"
+#include "model/fm.hpp"
 
 semantic_node* semantic_object::get_member(std::wstring name) {
 	if (this->members.find(name) != this->members.end()) {

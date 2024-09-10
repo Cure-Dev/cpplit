@@ -1,7 +1,7 @@
 #pragma once
 
-#include "semantic/class.hpp"
-#include "semantic/object.hpp"
+#include "model/class.hpp"
+#include "model/object.hpp"
 
 class _semantic_builtin_class_tuple : public semantic_class {
 public:
