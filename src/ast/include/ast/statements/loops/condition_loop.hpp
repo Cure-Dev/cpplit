@@ -14,5 +14,5 @@ public:
 		return L"loop (" + this->CONDITION->view() + L") {\n" + block_indent(this->BODY->view()) + L"}\n";
 	}
 
-	void exec(environment env, const runtime& Runtime);
+	void exec(identifier_table env, const runtime& Runtime);
 };

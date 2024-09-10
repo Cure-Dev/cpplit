@@ -2,9 +2,9 @@
 
 #include <filesystem>
 
-#include "semantic/builtin/io/output.hpp"
-#include "semantic/builtin/bool.hpp"
-#include "semantic/builtin/string.hpp"
+#include "model/builtin/io/output.hpp"
+#include "model/builtin/bool.hpp"
+#include "model/builtin/string.hpp"
 
 class project {
 public:
@@ -13,7 +13,7 @@ public:
 
 class module : public project {
 public:
-	virtual semantic_node* eval(/*runtime*/) = 0;
+	virtual model_node* eval(/*runtime*/) = 0;
 };
 
 class library : public project {
@@ -53,7 +53,7 @@ public:
 static class : public module {
 public:
 
-	semantic_node* eval() {
+	model_node* eval() {
 		return lit_io_output;
 	}
 
@@ -61,14 +61,14 @@ public:
 
 static class : public module {
 public:
-	semantic_node* eval() {
+	model_node* eval() {
 		return builtin_class_bool;
 	}
 } mod_bool;
 
 static class : public module {
 public:
-	semantic_node* eval() {
+	model_node* eval() {
 		return builtin_class_string;
 	}
 } mod_string;

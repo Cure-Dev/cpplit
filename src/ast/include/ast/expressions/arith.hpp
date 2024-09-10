@@ -32,10 +32,10 @@ public:
 		return L"(" + this->operand_left->view() + L"+" + this->operand_right->view() + L")";
 	}
 
-	semantic_node* eval(environment env, const runtime& Runtime) {
-		auto left = dynamic_cast<semantic_object*> (this->operand_left->eval(env, Runtime));
-		auto right = dynamic_cast<semantic_object*> (this->operand_right->eval(env, Runtime));
-		auto method = dynamic_cast<semantic_method*> (left->get_member(L"add"));
+	model_node* eval(identifier_table env, const runtime& Runtime) {
+		auto left = dynamic_cast<model_object*> (this->operand_left->eval(env, Runtime));
+		auto right = dynamic_cast<model_object*> (this->operand_right->eval(env, Runtime));
+		auto method = dynamic_cast<model_method*> (left->get_member(L"add"));
 		return method -> call(left, {right});
 	}
 };

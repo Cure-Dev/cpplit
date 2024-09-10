@@ -16,8 +16,8 @@
 #include "parser.hpp"
 #include "ast/node.hpp"
 
-#include "semantic/class.hpp"
-#include "semantic/environment.hpp"
+#include "model/class.hpp"
+#include "model/identifier_table.hpp"
 
 #include "losh.hpp"
 
@@ -147,7 +147,7 @@ int main(int argc, char** args) {
             token_list Token_list = ui_scan(Char_stream, new file_input_device(filepath), command);
             statement* ast = parse_exe(Token_list);
 
-            auto env = environment {};
+            auto env = identifier_table {};
             ast->exec(env, Runtime);
 
             /*

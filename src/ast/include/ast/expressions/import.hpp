@@ -1,7 +1,7 @@
 #pragma once
 
-#include "semantic/class.hpp"
-#include "semantic/environment.hpp"
+#include "model/class.hpp"
+#include "model/identifier_table.hpp"
 
 #include "path.hpp"
 #include "project.hpp"
@@ -25,7 +25,7 @@ public:
 		return L"import (" + Path + L")";
 	}
 
-	semantic_node* eval(environment env, const runtime& Runtime) {
+	model_node* eval(identifier_table env, const runtime& Runtime) {
 
 		project* result = &all;
 

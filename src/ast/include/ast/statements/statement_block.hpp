@@ -16,7 +16,7 @@ public:
 		return result;
 	}
 
-	void exec(environment env, const runtime& Runtime) {
+	void exec(identifier_table env, const runtime& Runtime) {
 		for (auto Statement : this->BLOCK) {
 			if (dynamic_cast<defination*> (Statement) != NULL) {
 				(dynamic_cast<defination*> (Statement))->exec(env, Runtime);
