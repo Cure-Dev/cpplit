@@ -116,7 +116,7 @@ target_link_libraries(${PROJECT_NAME}_ast PRIVATE ${PROJECT_NAME}_tokens)
 target_include_directories(${PROJECT_NAME}_ast PRIVATE ${CODEC_DIR}/include)
 
 ## computational data model
-set(MODEL_DIR "${SOURCE_DIR}/semantic")
+set(MODEL_DIR "${SOURCE_DIR}/model")
 file(GLOB_RECURSE MODEL_SOURCES "${MODEL_DIR}/implement/*.cpp")
 list(FILTER MODEL_SOURCES EXCLUDE REGEX ".*old\\.cpp$")
 add_library(${PROJECT_NAME}_model STATIC ${MODEL_SOURCES})
