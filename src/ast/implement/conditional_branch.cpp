@@ -3,8 +3,8 @@
 
 void conditional_branches::exec(identifier_table env, const runtime& Runtime) {
 	for (auto branch : this->BRANCHES) {
-		semantic_object* condition = dynamic_cast<semantic_object*> (branch->CONDITION->eval(env, Runtime));
-		semantic_object* interface;
+		model_object* condition = dynamic_cast<model_object*> (branch->CONDITION->eval(env, Runtime));
+		model_object* interface;
 
 		try {
 			interface = call_method(condition, L"bool");

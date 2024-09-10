@@ -3,10 +3,10 @@
 #include "model/class.hpp"
 #include "model/object.hpp"
 
-extern semantic_class* builtin_class_bool;
+extern model_class* builtin_class_bool;
 
-class builtin_object_bool : public semantic_object {
+class builtin_object_bool : public model_object {
 public:
-	builtin_object_bool(bool data) : semantic_object(builtin_class_bool, {}), data(data) {};
+	builtin_object_bool(bool data) : model_object(builtin_class_bool, {}), data(data) {};
 	bool data;
 };

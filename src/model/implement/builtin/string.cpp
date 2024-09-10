@@ -1,51 +1,51 @@
 #include "model/fm.hpp"
 #include "model/builtin/string.hpp"
 
-class _string_init : public semantic_function {
+class _string_init : public model_function {
 public:
-	_string_init() : semantic_function(builtin_class_string) {};
+	_string_init() : model_function(builtin_class_string) {};
 
-	semantic_object* call(_builtin_object_tuple* arglist) {
+	model_object* call(_builtin_object_tuple* arglist) {
 		auto arg = arglist->items[0];
-		return (dynamic_cast<semantic_method*> (arg->get_member(L"string"))) -> call(arg, {});
+		return (dynamic_cast<model_method*> (arg->get_member(L"string"))) -> call(arg, {});
 	}
 } *string_init = new _string_init {};
 /*不写new _string_init 无法初始化？*/
 
-class _string_string : public semantic_method {
+class _string_string : public model_method {
 public:
-	_string_string() : semantic_method(builtin_class_string) {};
+	_string_string() : model_method(builtin_class_string) {};
 
-	semantic_object* call(semantic_object* obj, std::vector<semantic_object*> arglist) {
+	model_object* call(model_object* obj, std::vector<model_object*> arglist) {
 		return obj;
 	}
 };
 auto string_string = new _string_string {};
 
-class _string_output : public semantic_method {
+class _string_output : public model_method {
 public:
-	_string_output() : semantic_method(builtin_class_string) {};
+	_string_output() : model_method(builtin_class_string) {};
 
-	semantic_object* call(semantic_object* obj, std::vector<semantic_object*> arglist) {
+	model_object* call(model_object* obj, std::vector<model_object*> arglist) {
 		return obj;
 	}
 };
 auto string_output = new _string_output {};
 
-class _string_add : public semantic_method {
+class _string_add : public model_method {
 public:
-	_string_add() : semantic_method(builtin_class_string) {}; //!
+	_string_add() : model_method(builtin_class_string) {}; //!
 
-	semantic_object* call(semantic_object* obj, std::vector<semantic_object*> arglist) {
+	model_object* call(model_object* obj, std::vector<model_object*> arglist) {
 		auto left = dynamic_cast<builtin_object_string*> (obj);
 		auto _right = arglist[0];
-		auto right = dynamic_cast<builtin_object_string*> (dynamic_cast<semantic_method*> (_right->get_member(L"string")) -> call(_right, {}));
+		auto right = dynamic_cast<builtin_object_string*> (dynamic_cast<model_method*> (_right->get_member(L"string")) -> call(_right, {}));
 		return new builtin_object_string { left->val + right->val };
 	}
 };
 auto string_add = new _string_add {};
 
-semantic_class* builtin_class_string = new semantic_class { {}, 
+model_class* builtin_class_string = new model_class { {}, 
 	{{L"call", string_init}}, 
 	{
 		{ L"string", string_string },

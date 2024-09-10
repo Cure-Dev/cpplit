@@ -2,11 +2,11 @@
 
 #include "model/object.hpp"
 
-static class : public semantic_class {
+static class : public model_class {
 public:
-	semantic_node* get_member(std::wstring name) {
+	model_node* get_member(std::wstring name) {
 		throw "no member in null";
 	}
-} *semantic_builtin_class_null = {};
+} *model_builtin_class_null = {};
 
-static auto semantic_builtin_object_null = new semantic_object { semantic_builtin_class_null, {} };
+static auto model_builtin_object_null = new model_object { model_builtin_class_null, {} };

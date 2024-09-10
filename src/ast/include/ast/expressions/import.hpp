@@ -25,7 +25,7 @@ public:
 		return L"import (" + Path + L")";
 	}
 
-	semantic_node* eval(identifier_table env, const runtime& Runtime) {
+	model_node* eval(identifier_table env, const runtime& Runtime) {
 
 		project* result = &all;
 

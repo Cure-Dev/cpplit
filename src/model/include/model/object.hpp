@@ -6,12 +6,12 @@
 #include "./node.hpp"
 #include "./class.hpp"
 
-class semantic_object : public semantic_node {
+class model_object : public model_node {
 public:
-	semantic_object(semantic_class* type, std::unordered_map<std::wstring, semantic_object*> members) : type(type), members(members) {};
-	semantic_class* type;
-	semantic_node* get_member(std::wstring name);
+	model_object(model_class* type, std::unordered_map<std::wstring, model_object*> members) : type(type), members(members) {};
+	model_class* type;
+	model_node* get_member(std::wstring name);
 
 private:
-	std::unordered_map<std::wstring, semantic_object*> members;
+	std::unordered_map<std::wstring, model_object*> members;
 };

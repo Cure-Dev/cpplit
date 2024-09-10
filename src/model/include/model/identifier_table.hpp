@@ -10,18 +10,18 @@ class identifier_table {
 public:
 	identifier_table() {};
 
-/*	semantic_node* operator[](std::wstring name) {
+/*	model_node* operator[](std::wstring name) {
 		return this[name];
 	}
 */
 	// declare define assign
 	// insert
-	void add(std::wstring name, semantic_node* val) {
+	void add(std::wstring name, model_node* val) {
 		this->map[name] = val;
 	}
 
 	// find / get
-	semantic_node* get(std::wstring name) {
+	model_node* get(std::wstring name) {
 		if (this->map.find(name) != this->map.end()) {
 			return this->map[name];
 		}
@@ -31,5 +31,5 @@ public:
 	}
 
 private:
-	std::unordered_map<std::wstring, semantic_node*> map;
+	std::unordered_map<std::wstring, model_node*> map;
 };

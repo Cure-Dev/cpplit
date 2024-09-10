@@ -8,38 +8,38 @@
 #include <unordered_map>
 #include <string>
 
-class _bool_init : public semantic_function {
+class _bool_init : public model_function {
 public:
-	_bool_init() : semantic_function(builtin_class_bool) {};
+	_bool_init() : model_function(builtin_class_bool) {};
 
-	semantic_object* call(_builtin_object_tuple* arglist) {
+	model_object* call(_builtin_object_tuple* arglist) {
 		auto arg = arglist->items[0];
-		return (dynamic_cast<semantic_method*> (arg->get_member(L"bool"))) -> call(arg, {});
+		return (dynamic_cast<model_method*> (arg->get_member(L"bool"))) -> call(arg, {});
 	}
 };
 auto bool_init = new _bool_init {};
 
-class _bool_bool : public semantic_method {
+class _bool_bool : public model_method {
 public:
-	_bool_bool() : semantic_method(builtin_class_bool) {};
+	_bool_bool() : model_method(builtin_class_bool) {};
 
-	semantic_object* call(semantic_object* obj, std::vector<semantic_object*> arglist) {
+	model_object* call(model_object* obj, std::vector<model_object*> arglist) {
 		return obj;
 	}
 };
 auto bool_bool = new _bool_bool {};
 
-class _bool_output : public semantic_method {
+class _bool_output : public model_method {
 public:
-	_bool_output() : semantic_method(builtin_class_bool) {};
+	_bool_output() : model_method(builtin_class_bool) {};
 
-	semantic_object* call(semantic_object* obj, std::vector<semantic_object*> arglist) {
+	model_object* call(model_object* obj, std::vector<model_object*> arglist) {
 		return new builtin_object_string { dynamic_cast<builtin_object_bool*> (obj)->data ? L"true" : L"false" };
 	}
 };
 auto bool_output = new _bool_output {};
 
-semantic_class* builtin_class_bool = new semantic_class { {}, 
+model_class* builtin_class_bool = new model_class { {}, 
 	{{L"call", bool_init}}, 
 	{
 		{ L"bool", bool_bool },

@@ -6,13 +6,13 @@
 
 #include "./node.hpp"
 
-class semantic_method;
+class model_method;
 
-class semantic_class : public semantic_node {
+class model_class : public model_node {
 public:
-	semantic_class(std::vector<semantic_class*> supers = {}, std::unordered_map<std::wstring, semantic_node*> members = {}, std::unordered_map<std::wstring, semantic_method*> methods = {}) : semantic_node(members), supers(supers), methods(methods) {};
-	std::vector<semantic_class*> supers;
-	std::unordered_map<std::wstring, semantic_method*> methods;
+	model_class(std::vector<model_class*> supers = {}, std::unordered_map<std::wstring, model_node*> members = {}, std::unordered_map<std::wstring, model_method*> methods = {}) : model_node(members), supers(supers), methods(methods) {};
+	std::vector<model_class*> supers;
+	std::unordered_map<std::wstring, model_method*> methods;
 
-	semantic_node* get_member(std::wstring name);
+	model_node* get_member(std::wstring name);
 };
