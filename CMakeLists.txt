@@ -115,17 +115,17 @@ target_link_libraries(${PROJECT_NAME}_ast PRIVATE ${PROJECT_NAME}_tokens)
 
 target_include_directories(${PROJECT_NAME}_ast PRIVATE ${CODEC_DIR}/include)
 
-## semantic (computational data model)
+## computational data model
 set(MODEL_DIR "${SOURCE_DIR}/semantic")
-file(GLOB_RECURSE SEMANTIC_SOURCES "${MODEL_DIR}/implement/*.cpp")
-list(FILTER SEMANTIC_SOURCES EXCLUDE REGEX ".*old\\.cpp$")
-add_library(${PROJECT_NAME}_semantic STATIC ${SEMANTIC_SOURCES})
-target_include_directories(${PROJECT_NAME}_semantic PUBLIC "${MODEL_DIR}/include")
+file(GLOB_RECURSE MODEL_SOURCES "${MODEL_DIR}/implement/*.cpp")
+list(FILTER MODEL_SOURCES EXCLUDE REGEX ".*old\\.cpp$")
+add_library(${PROJECT_NAME}_model STATIC ${MODEL_SOURCES})
+target_include_directories(${PROJECT_NAME}_model PUBLIC "${MODEL_DIR}/include")
 
-target_include_directories(${PROJECT_NAME}_semantic PRIVATE ${CODEC_DIR}/include) # or link library?
+target_include_directories(${PROJECT_NAME}_model PRIVATE ${CODEC_DIR}/include) # or link library?
 
-target_include_directories(${PROJECT_NAME}_semantic PUBLIC ${GMP_DIR}/include) #..
-target_link_libraries(${PROJECT_NAME}_semantic PRIVATE ${GMP_LIBRARY}) #gmpxx?
+target_include_directories(${PROJECT_NAME}_model PUBLIC ${GMP_DIR}/include) #..
+target_link_libraries(${PROJECT_NAME}_model PRIVATE ${GMP_LIBRARY}) #gmpxx?
 
 
 ## ui
@@ -135,11 +135,11 @@ list(FILTER UI_SOURCES EXCLUDE REGEX ".*old\\.cpp$")
 add_executable(${PROJECT_NAME} ${UI_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${SOURCE_DIR}/ui/include")
 
-target_link_libraries(${PROJECT_NAME}_ast PRIVATE ${PROJECT_NAME}_semantic)
+target_link_libraries(${PROJECT_NAME}_ast PRIVATE ${PROJECT_NAME}_model)
 target_link_libraries(${PROJECT_NAME}_parser PRIVATE ${PROJECT_NAME}_ast)
-target_link_libraries(${PROJECT_NAME}_parser PRIVATE ${PROJECT_NAME}_semantic)
+target_link_libraries(${PROJECT_NAME}_parser PRIVATE ${PROJECT_NAME}_model)
 
-target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_semantic) #utils/call_method need
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_model) #utils/call_method need
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_reader) #ui/main
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_scanner) #ui/main
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_parser)
