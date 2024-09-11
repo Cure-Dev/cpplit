@@ -36,6 +36,8 @@
 #include "scanner/exceptions/lexical_errors.hpp"
 #include "file_input_device.hpp"
 
+#include "model/runtime/env.hpp"
+
 static void test() {
     // 初始化两个大数
     mpz_class a, b, c;
@@ -147,6 +149,7 @@ int main(int argc, char** args) {
             token_list Token_list = ui_scan(Char_stream, new file_input_device(filepath), command);
             statement* ast = parse_exe(Token_list);
 
+            env::working_directory = decode(std::filesystem::current_path().string());
             auto env = identifier_table {};
             ast->exec(env, Runtime);
 

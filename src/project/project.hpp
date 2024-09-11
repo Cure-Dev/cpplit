@@ -5,6 +5,7 @@
 #include "model/builtin/io/output.hpp"
 #include "model/builtin/bool.hpp"
 #include "model/builtin/string.hpp"
+#include "model/builtin/wd.hpp"
 
 class project {
 public:
@@ -61,6 +62,15 @@ public:
 
 static class : public module {
 public:
+
+	model_node* eval() {
+		return builtin_function_getwd;
+	}
+
+} mod_lit_getwd;
+
+static class : public module {
+public:
 	model_node* eval() {
 		return builtin_class_bool;
 	}
@@ -96,6 +106,9 @@ public:
 		}
 		else if (name == L"string") {
 			return &mod_string;
+		}
+		else if (name == L"wd") {
+			return &mod_lit_getwd;
 		}
 		else {
 			throw L"no member named " + name;
