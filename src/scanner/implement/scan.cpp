@@ -10,8 +10,7 @@
 #include "scan_number.hpp"
 #include "scan_symbol.hpp"
 #include "scan_identifier.hpp"
-
-#include "exceptions/lexical_errors.hpp"
+#include "scan_comments.hpp"
 
 #include "codec.hpp"
 #include "position.hpp"
@@ -53,6 +52,10 @@ std::vector<std::pair<std::function<bool(wchar_t)>, std::function<token*(char_st
 	{ string_head_matched, scan_string },
 };
 
+std::vector<std::pair<std::function<bool(wchar_t)>, std::function<void(char_stream*)>>> first_set_void = {
+	{ block_comments_matched, scan_block_comments },
+};
+
 token_list scan(char_stream* src) {
 
 	std::vector<token*> Token_list;
@@ -61,23 +64,10 @@ token_list scan(char_stream* src) {
 
 		int begin = src->get_pos();
 
-		// comments.sharp_comments
-		if (src->peek() == L'#') {
-			try {
-				do {
-					src->next();
-				} while (src->peek() != L'#');
-			}
-			catch (const char* e) { //!!
-				throw new lexical_errors::unterminated_comments { device->get_point() };
-			}
-			src->next();
-		}
-
 		// comments.single_line
-		else if (src->peek() == L';') {
+		if (src->peek() == L';') {
 			src->next(); // if reaches end
-			if (src->peek() == L';') {
+			if (src->peek() == L';') { // peek to EOF in stdin?
 				while (!src->is_end() && src->peek() != L'\n') { //
 					src->next();
 				}
@@ -120,6 +110,15 @@ token_list scan(char_stream* src) {
 					Token_list.push_back(f.second(src));
 					processed = true;
 					break;
+				}
+			}
+			if (!processed) {
+				for (auto f : first_set_void) {
+					if (f.first(src->peek())) {
+						f.second(src);
+						processed = true;
+						break;
+					}
 				}
 			}
 			if (!processed) {
