@@ -16,13 +16,13 @@ public:
 		return result;
 	}
 
-	void exec(identifier_table env, const runtime& Runtime) {
+	void exec(identifier_table env) {
 		for (auto Statement : this->BLOCK) {
 			if (dynamic_cast<defination*> (Statement) != NULL) {
-				(dynamic_cast<defination*> (Statement))->exec(env, Runtime);
+				(dynamic_cast<defination*> (Statement))->exec(env);
 			}
 			else {
-				Statement->exec(env, Runtime);
+				Statement->exec(env);
 			}
 		}
 	}

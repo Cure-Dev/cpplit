@@ -24,7 +24,6 @@
 #include "helper/helper.hpp"
 #include "packer/pack.hpp"
 
-#include "runtime.hpp"
 
 #include <gmpxx.h>
 
@@ -140,10 +139,10 @@ int main(int argc, char** args) {
                 throw new missing_argument { L"filepath" };
             }
 
-            runtime Runtime;
-            Runtime.filepath = filepath;
-            Runtime.working_directory = std::filesystem::current_path();
-            Runtime.debug.lang = language::en_us;
+            // runtime Runtime;
+            // Runtime.filepath = filepath;
+            // Runtime.working_directory = std::filesystem::current_path();
+            // Runtime.debug.lang = language::en_us;
 
             char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
             token_list Token_list = ui_scan(Char_stream, new file_input_device(filepath), command);
@@ -151,7 +150,7 @@ int main(int argc, char** args) {
 
             env::working_directory = decode(std::filesystem::current_path().string());
             auto env = identifier_table {};
-            ast->exec(env, Runtime);
+            ast->exec(env);
 
             /*
                 debug.lang=zh-cn

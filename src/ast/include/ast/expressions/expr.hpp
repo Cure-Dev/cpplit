@@ -10,13 +10,12 @@
 #include "model/class.hpp"
 #include "model/identifier_table.hpp"
 
-#include "runtime.hpp"
 
 class expr : public node {
 public:
 	expr(int begin, int end) : node(begin, end) {};
 
-	virtual model_node* eval(identifier_table env, const runtime& Runtime) {
+	virtual model_node* eval(identifier_table env) {
 		throw "pure virtual method";
 	};
 

@@ -2,7 +2,6 @@
 
 #include "ast/node.hpp"
 #include "model/identifier_table.hpp"
-#include "runtime.hpp"
 
 class statement : public node {
 public:
@@ -12,6 +11,6 @@ public:
 		return s + L";\n";
 	}
 
-	virtual void exec(identifier_table env, const runtime& Runtime) {}; //!
+	virtual void exec(identifier_table env) {}; //!
 
 };

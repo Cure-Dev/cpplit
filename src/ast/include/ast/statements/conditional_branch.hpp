@@ -36,5 +36,5 @@ public:
 		return result;
 	}
 
-	void exec(identifier_table env, const runtime& Runtime);
+	void exec(identifier_table env);
 };

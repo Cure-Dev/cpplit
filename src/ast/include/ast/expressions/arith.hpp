@@ -22,6 +22,8 @@ public:
 	}
 };
 
+#include "model/object.hpp" //
+#include "model/fm.hpp" //
 class expr_addition : public expr {
 public:
 	expr_addition(expr* operand_left, expr* operand_right, int begin, int end) : expr(begin, end), operand_left(operand_left), operand_right(operand_right) {}
@@ -32,9 +34,9 @@ public:
 		return L"(" + this->operand_left->view() + L"+" + this->operand_right->view() + L")";
 	}
 
-	model_node* eval(identifier_table env, const runtime& Runtime) {
-		auto left = dynamic_cast<model_object*> (this->operand_left->eval(env, Runtime));
-		auto right = dynamic_cast<model_object*> (this->operand_right->eval(env, Runtime));
+	model_node* eval(identifier_table env) {
+		auto left = dynamic_cast<model_object*> (this->operand_left->eval(env));
+		auto right = dynamic_cast<model_object*> (this->operand_right->eval(env));
 		auto method = dynamic_cast<model_method*> (left->get_member(L"add"));
 		return method -> call(left, {right});
 	}

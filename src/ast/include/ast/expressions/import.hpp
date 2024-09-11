@@ -6,7 +6,6 @@
 #include "path.hpp"
 #include "project.hpp"
 
-#include "runtime.hpp"
 
 #include "ast/expressions/expr.hpp"
 #include "ast/expressions/string.hpp"
@@ -25,7 +24,7 @@ public:
 		return L"import (" + Path + L")";
 	}
 
-	model_node* eval(identifier_table env, const runtime& Runtime) {
+	model_node* eval(identifier_table env) {
 
 		project* result = &all;
 
