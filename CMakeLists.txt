@@ -64,7 +64,6 @@ file(GLOB_RECURSE SCANNER_SOURCES "${SCANNER_DIR}/implement/*.cpp")
 list(FILTER SCANNER_SOURCES EXCLUDE REGEX ".*old\\.cpp$")
 add_library(${PROJECT_NAME}_scanner STATIC ${SCANNER_SOURCES}) # scanner_lib?
 
-target_include_directories(${PROJECT_NAME}_scanner INTERFACE "${SCANNER_DIR}/interface")
 target_include_directories(${PROJECT_NAME}_scanner INTERFACE "${SCANNER_DIR}/include")
 target_include_directories(${PROJECT_NAME}_scanner PRIVATE "${SCANNER_DIR}/include/scanner")
 target_include_directories(${PROJECT_NAME}_scanner PRIVATE "${SCANNER_DIR}/internal")
@@ -159,8 +158,8 @@ install(
   ARCHIVE DESTINATION lib
   # INCLUDES DESTINATION include
 )
-install(DIRECTORY src/scanner/include/ src/scanner/interface/ DESTINATION include/scanner)
-install(DIRECTORY src/parser/include/ src/parser/interface/ DESTINATION include/parser)
+install(DIRECTORY src/scanner/include/ DESTINATION include)
+install(DIRECTORY src/parser/include/ src/parser/interface/ DESTINATION include/parser) #!
 
 add_custom_target(uninstall
   COMMAND xargs rm < install_manifest.txt

@@ -4,17 +4,16 @@
 
 #include "tokens/keyword.hpp"
 #include "tokens/symbol.hpp"
-#include "token_list.hpp"
 
+#include "scan.hpp"
 #include "scan_string.hpp"
 #include "scan_number.hpp"
 #include "scan_symbol.hpp"
 #include "scan_identifier.hpp"
 
-#include "codec.hpp"
-
 #include "exceptions/lexical_errors.hpp"
 
+#include "codec.hpp"
 #include "position.hpp"
 
 #include "rtenv.hpp"
