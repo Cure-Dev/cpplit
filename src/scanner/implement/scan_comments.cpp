@@ -1,6 +1,5 @@
 #include "scan_comments.hpp"
 #include "exceptions/lexical_errors.hpp"
-#include "rtenv.hpp" //!!
 
 #include <unordered_set>
 
@@ -23,7 +22,7 @@ void scan_block_comments(char_stream* src) {
 		} while (block_comments_termset.find(src->peek()) == block_comments_termset.end());
 	}
 	catch (const char* e) { //!!
-		throw new lexical_errors::unterminated_comments { device->get_point() };
+		throw new lexical_errors::unterminated_comments { src->get_pos() };
 	}
 	src->next();
 }

@@ -15,7 +15,6 @@
 #include "codec.hpp"
 #include "position.hpp"
 
-#include "rtenv.hpp"
 #include "file_device_position.hpp"
 
 

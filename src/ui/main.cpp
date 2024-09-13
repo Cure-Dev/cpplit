@@ -31,7 +31,6 @@
 #include "char_stream.hpp"
 #include "string_char_stream.hpp"
 
-#include "scanner/rtenv.hpp"
 #include "scanner/exceptions/lexical_errors.hpp"
 #include "file_input_device.hpp"
 
@@ -71,12 +70,12 @@ token_list ui_scan_thread(char_stream* Char_stream, input_device* device, const 
     // bool color; // cross-module
     // lang = language::zh_cn;
     try {
-        ::device = device;
+        // ::device = device;
         return scan(Char_stream);
     }
 
     catch (lexical_error* e) {
-        std::wcerr << e->msg(language::en_us);
+        std::wcerr << e->head(device, language::en_us) << L"\n" << e->body(language::en_us);
         exit(1);
     }
 }

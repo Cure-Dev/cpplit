@@ -5,26 +5,22 @@
 
 class lexical_error {
 public:
-	lexical_error(device_position* device) : device(device) {};
+	lexical_error(int point) : point(point) {};
 
-	std::wstring msg(language lang) {
-		return head(lang) + body(lang);
-	}
-
-	std::wstring head(language lang) {
-		return device->msg(lang) + L"\n";
+	std::wstring head(input_device* device, language lang) {
+		return device->get_point_info(point, lang);
 	}
 
 	virtual std::wstring body(language) = 0;
 
 private:
-	device_position* device = nullptr;
+	int point;
 };
 
 namespace lexical_errors {
 	class unterminated_comments : public lexical_error {
 	public:
-		unterminated_comments(device_position* device) : lexical_error(device) {};
+		unterminated_comments(int point) : lexical_error(point) {};
 
 		std::wstring body(language lang) {
 			switch (lang) {

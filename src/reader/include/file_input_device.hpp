@@ -3,6 +3,7 @@
 #include "input_device.hpp"
 #include "language.hpp"
 #include "file_device_position.hpp"
+#include "number_convert.hpp"
 
 class file_input_device : public input_device {
 public:
@@ -17,8 +18,16 @@ public:
 		}
 	}
 
-	file_device_point* get_point() override {
+	file_device_point* get_point() { //
 		return new file_device_point {this, 2, 2};
+	}
+
+	std::wstring get_point_info(int point, language lang) {
+		return getinfo(lang) + L", at " + number_convert::to_dec(point);
+	}
+
+	std::wstring get_segment_info(int begin, int end, language lang) {
+		return getinfo(lang) + L", from " + number_convert::to_dec(begin) + L", to " + number_convert::to_dec(end);
 	}
 
 private:
