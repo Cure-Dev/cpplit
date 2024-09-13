@@ -7,7 +7,7 @@
 
 class file_input_device : public input_device {
 public:
-	file_input_device(std::wstring filepath) : filepath(filepath) {};
+	file_input_device(std::wstring filepath, string_char_stream* src) : filepath(filepath), src(src) {};
 
 	std::wstring getinfo(language lang) {
 		switch (lang) {
@@ -16,10 +16,6 @@ public:
 		default:
 			return L"In file \"" + filepath + L"\"";
 		}
-	}
-
-	file_device_point* get_point() { //
-		return new file_device_point {this, 2, 2};
 	}
 
 	std::wstring get_point_info(int point, language lang) {
@@ -32,5 +28,5 @@ public:
 
 private:
 	std::wstring filepath;
-	char_stream* Char_stream;
+	string_char_stream* src; // input_source
 };

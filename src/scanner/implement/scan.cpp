@@ -15,9 +15,6 @@
 #include "codec.hpp"
 #include "position.hpp"
 
-#include "file_device_position.hpp"
-
-
 std::unordered_set<wchar_t> ignore_charset = {
 	L' ',
 	L'\t',

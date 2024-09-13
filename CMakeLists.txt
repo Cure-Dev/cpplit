@@ -150,6 +150,7 @@ target_link_libraries(${PROJECT_NAME} ${LOSH_LIBRARY})
 
 target_link_libraries(${PROJECT_NAME} ${GMPXX_LIBRARY} ${GMP_LIBRARY}) # ui temp?
 target_include_directories(${PROJECT_NAME} PRIVATE ${NUMBER_CONVERTER_DIR}/include) #
+target_include_directories(${PROJECT_NAME}_reader PRIVATE ${NUMBER_CONVERTER_DIR}/include) #!! string_char_stream.hpp
 
 install(
   TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_scanner ${PROJECT_NAME}_parser

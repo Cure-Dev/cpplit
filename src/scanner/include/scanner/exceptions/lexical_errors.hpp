@@ -1,13 +1,13 @@
 #pragma once
 
 #include "language.hpp"
-#include "device_position.hpp"
+#include "char_stream.hpp"
 
 class lexical_error {
 public:
 	lexical_error(int point) : point(point) {};
 
-	std::wstring head(input_device* device, language lang) {
+	std::wstring head(char_stream* device, language lang) {
 		return device->get_point_info(point, lang);
 	}
 

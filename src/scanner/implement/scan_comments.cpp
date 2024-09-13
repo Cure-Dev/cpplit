@@ -22,7 +22,7 @@ void scan_block_comments(char_stream* src) {
 		} while (block_comments_termset.find(src->peek()) == block_comments_termset.end());
 	}
 	catch (const char* e) { //!!
-		throw new lexical_errors::unterminated_comments { src->get_pos() };
+		throw new lexical_errors::unterminated_comments { src->get_pos()-1 };
 	}
 	src->next();
 }
