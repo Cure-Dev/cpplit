@@ -69,7 +69,6 @@ target_include_directories(${PROJECT_NAME}_scanner PRIVATE "${SCANNER_DIR}/inclu
 target_include_directories(${PROJECT_NAME}_scanner PRIVATE "${SCANNER_DIR}/internal")
 
 target_include_directories(${PROJECT_NAME}_scanner PUBLIC "${SOURCE_DIR}/char_stream/include")
-target_include_directories(${PROJECT_NAME}_scanner PUBLIC "${SOURCE_DIR}/input_device/include")
 target_include_directories(${PROJECT_NAME}_scanner PRIVATE "${SOURCE_DIR}/reader/include") #!
 
 target_include_directories(${PROJECT_NAME}_scanner PRIVATE ${CODEC_DIR}/include)

@@ -3,21 +3,31 @@
 #include <string>
 
 #include "exception.hpp"
-#include "position.hpp"
 
 #include "tokens/symbol.hpp"
 
 class syntax_error : public exception {
+public:
+	int get_pos() {
+		return pos;
+	}
 
+protected:
+	void set_pos(int pos) {
+		this->pos = pos;
+	}
+private:
+	int pos;
 };
 
 class expect_symbol : public syntax_error {
 public:
-	expect_symbol(position pos, token_symbol::type sym) : pos(pos), sym(sym) {};
-	position pos;
+	expect_symbol(int pos, token_symbol::type sym) : sym(sym) {
+		set_pos(pos);
+	};
 	token_symbol::type sym;
 
-	std::wstring msg(language L) {
+	std::wstring msg(language L) { // info
 		static std::unordered_map<token_symbol::type, std::wstring> map = {
 			{ token_symbol::type::EOF_, L"EOF" },
 			{ token_symbol::type::EOL_, L"EOL" },
@@ -72,7 +82,7 @@ public:
 			{ token_symbol::type::PERCENT_EQUAL, L"percent_equal" },
 
 		};
-		return L"error: except symbol " + map[this->sym];
+		return L"error: expect symbol " + map[this->sym];
 	}
 };
 

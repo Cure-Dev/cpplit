@@ -10,7 +10,7 @@ namespace check::symbol {
 			Token_list.next();
 		}
 		else {
-			throw new expect_symbol { {Token_list.this_()->BEGIN, Token_list.this_()->END}, Type };
+			throw new expect_symbol { Token_list.this_()->BEGIN/*{Token_list.this_()->BEGIN, Token_list.this_()->END}*/, Type };
 		}
 	}
 

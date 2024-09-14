@@ -86,6 +86,17 @@ token_list ui_scan(char_stream* Char_stream, losh& command) { // 有效吗
     return result;
 }
 
+#include "exceptions/syntax_errors.hpp" //
+node* ui_parse(token_list Token_list, char_stream* device, losh& command) {
+    try {
+        return parse_exe(Token_list);
+    }
+    catch (syntax_error* e) {
+        std::wcerr << device->get_point_info(e->get_pos(), language::en_us) << std::endl << e->msg(language::en_us) << std::endl;
+        exit(1);
+    }
+}
+
 int main(int argc, char** args) {
 
     std::locale::global(std::locale(""));
@@ -121,7 +132,7 @@ int main(int argc, char** args) {
             
             char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
             token_list Token_list = ui_scan(Char_stream, command);
-            node* ast = parse_exe(Token_list);
+            node* ast = ui_parse(Token_list, Char_stream, command);
             std::wstring o = ast->view();
             std::wcout << o;
             
