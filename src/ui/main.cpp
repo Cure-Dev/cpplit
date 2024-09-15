@@ -66,28 +66,28 @@ static void test() {
 
 }
 
-token_list ui_scan_thread(char_stream* Char_stream, const losh& command) {
+token_list ui_scan_thread(char_stream* Char_stream, input_device* device, const losh& command) {
     // bool color; // cross-module
     // lang = language::zh_cn;
     try {
         return scan(Char_stream);
     }
 
-    catch (lexical_error* e) {
-        std::wcerr << e->head(Char_stream/*device*/, language::en_us) << L"\n" << e->body(language::en_us);
+    catch (lexical_point_error* e) {
+        std::wcerr << device->get_point_info(e->get_pos(), language::en_us) << std::endl << e->info(language::en_us) << std::endl;
         exit(1);
     }
 }
 
 #include <future>
-token_list ui_scan(char_stream* Char_stream, losh& command) { // 有效吗
-    std::future<token_list> scan_thread = std::async(std::launch::async, [Char_stream, command] { return ui_scan_thread(Char_stream, command);});
+token_list ui_scan(char_stream* Char_stream, input_device* device, losh& command) { // 有效吗
+    std::future<token_list> scan_thread = std::async(std::launch::async, [Char_stream, device, command] { return ui_scan_thread(Char_stream, device, command);});
     token_list result = scan_thread.get();
     return result;
 }
 
 #include "exceptions/syntax_errors.hpp" //
-node* ui_parse(token_list Token_list, char_stream* device, losh& command) {
+node* ui_parse(token_list Token_list, input_device* device, losh& command) {
     try {
         return parse_exe(Token_list);
     }
@@ -114,8 +114,10 @@ int main(int argc, char** args) {
                 throw new missing_argument { L"filepath" };
             }
             
-            char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = ui_scan(Char_stream, command);
+            auto _ = read_file(filepath, codec_type::UTF_8);
+            auto device = _.first;
+            auto Char_stream = _.second;
+            token_list Token_list = ui_scan(Char_stream, device, command);
             std::wcout << Token_list.view() << std::endl;                
         
         }
@@ -130,9 +132,11 @@ int main(int argc, char** args) {
                 throw new missing_argument { L"filepath" };
             }
             
-            char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = ui_scan(Char_stream, command);
-            node* ast = ui_parse(Token_list, Char_stream, command);
+            auto _ = read_file(filepath, codec_type::UTF_8);
+            auto device = _.first;
+            auto Char_stream = _.second;
+            token_list Token_list = ui_scan(Char_stream, device, command);
+            node* ast = ui_parse(Token_list, device, command);
             std::wstring o = ast->view();
             std::wcout << o;
             
@@ -153,9 +157,11 @@ int main(int argc, char** args) {
             // Runtime.working_directory = std::filesystem::current_path();
             // Runtime.debug.lang = language::en_us;
 
-            char_stream* Char_stream = read_file(filepath, codec_type::UTF_8);
-            token_list Token_list = ui_scan(Char_stream, command);
-            statement* ast = parse_exe(Token_list);
+            auto _ = read_file(filepath, codec_type::UTF_8);
+            auto device = _.first;
+            auto Char_stream = _.second;
+            token_list Token_list = ui_scan(Char_stream, device, command);
+            statement* ast = dynamic_cast<statement*> (ui_parse(Token_list, device, command));
 
             env::working_directory = decode(std::filesystem::current_path().string());
             auto env = identifier_table {};

@@ -50,10 +50,11 @@ file(GLOB_RECURSE READER_SOURCES "${READER_DIR}/implement/*.cpp")
 add_library(${PROJECT_NAME}_reader STATIC ${READER_SOURCES})
 
 target_include_directories(${PROJECT_NAME}_reader PRIVATE "${READER_DIR}/internal")
-target_include_directories(${PROJECT_NAME}_reader INTERFACE "${READER_DIR}/interface")
 target_include_directories(${PROJECT_NAME}_reader PUBLIC "${READER_DIR}/include")
+target_include_directories(${PROJECT_NAME}_reader PRIVATE "${READER_DIR}/include/reader")
 
 target_include_directories(${PROJECT_NAME}_reader PUBLIC "${SOURCE_DIR}/char_stream/include")
+target_include_directories(${PROJECT_NAME}_reader PUBLIC "${SOURCE_DIR}/input_device/include")
 
 target_include_directories(${PROJECT_NAME}_reader PRIVATE ${CODEC_DIR}/include)
 target_link_libraries(${PROJECT_NAME}_reader PUBLIC ${CODEC_LIBRARY}) # 资源会浪费吗？
@@ -148,7 +149,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${LOSH_DIR}/include) #ui
 target_link_libraries(${PROJECT_NAME} ${LOSH_LIBRARY})
 
 target_link_libraries(${PROJECT_NAME} ${GMPXX_LIBRARY} ${GMP_LIBRARY}) # ui temp?
-target_include_directories(${PROJECT_NAME} PRIVATE ${NUMBER_CONVERTER_DIR}/include) #
 target_include_directories(${PROJECT_NAME}_reader PRIVATE ${NUMBER_CONVERTER_DIR}/include) #!! string_char_stream.hpp
 
 install(

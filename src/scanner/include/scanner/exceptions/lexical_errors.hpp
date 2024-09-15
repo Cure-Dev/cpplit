@@ -1,33 +1,45 @@
 #pragma once
 
 #include "language.hpp"
-#include "char_stream.hpp"
 
 class lexical_error {
 public:
-	lexical_error(int point) : point(point) {};
+	virtual std::wstring info(language) = 0;
+};
 
-	std::wstring head(char_stream* device, language lang) {
-		return device->get_point_info(point, lang);
+class lexical_point_error : public lexical_error {
+public:
+	lexical_point_error(int position) : position(position) {};
+	int get_pos() {
+		return position;
 	}
 
-	virtual std::wstring body(language) = 0;
+private:
+	int position;
+};
+
+class lexical_segment_error : public lexical_error {
+public:
+	lexical_segment_error(std::pair<int, int> position) : position(position) {};
+	std::pair<int, int> get_pos() {
+		return position;
+	}
 
 private:
-	int point;
+	std::pair<int, int> position;
 };
 
 namespace lexical_errors {
-	class unterminated_comments : public lexical_error {
+	class unterminated_comments : public lexical_point_error { //
 	public:
-		unterminated_comments(int point) : lexical_error(point) {};
+		unterminated_comments(int point) : lexical_point_error(point) {};
 
-		std::wstring body(language lang) {
+		std::wstring info(language lang) {
 			switch (lang) {
 			case language::zh_cn:
-				return L"词法错误：未终结的注释\n";
+				return L"词法错误：未终结的注释";
 			default:
-				return L"lexical error: unterminated comments\n";
+				return L"lexical error: unterminated comments";
 			}
 		}
 	};
