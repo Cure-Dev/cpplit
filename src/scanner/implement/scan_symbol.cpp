@@ -27,7 +27,7 @@ trie<token_symbol::type> symbol_map = {
 	{ L".", token_symbol::type::DOT },
 	{ L",", token_symbol::type::COMMA },
 	{ L":", token_symbol::type::COLON },
-	{ L";", token_symbol::type::SEMICOLON },
+	// { L";", token_symbol::type::SEMICOLON },
 	{ L"(", token_symbol::type::PAREN_LEFT },
 	{ L")", token_symbol::type::PAREN_RIGHT },
 	{ L"[", token_symbol::type::BRACKET_LEFT },
@@ -67,7 +67,7 @@ trie<token_symbol::type> symbol_map = {
 
 	{ L"，", token_symbol::type::COMMA },
 	{ L"：", token_symbol::type::COLON },
-	{ L"；", token_symbol::type::SEMICOLON },
+	// { L"；", token_symbol::type::SEMICOLON },
 	{ L"（", token_symbol::type::PAREN_LEFT },
 	{ L"）", token_symbol::type::PAREN_RIGHT },
 	{ L"【", token_symbol::type::BRACKET_LEFT },

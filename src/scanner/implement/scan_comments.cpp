@@ -15,7 +15,7 @@ bool block_comments_matched(wchar_t c) {
 	return block_comments_headset.find(c) != block_comments_headset.end();
 }
 
-void scan_block_comments(char_stream* src) {
+token* scan_block_comments(char_stream* src) {
 	try {
 		do {
 			src->next();
@@ -25,6 +25,26 @@ void scan_block_comments(char_stream* src) {
 		throw new lexical_errors::unterminated_comments { src->get_pos()-1 };
 	}
 	src->next();
+	return nullptr;
 }
 
-void scan_line_comments(char_stream*);
+bool line_comments_matched(wchar_t c) {
+	return c == ';';
+}
+
+
+// comments.single_line
+#include "tokens/symbol.hpp"
+token* scan_line_comments(char_stream* src) {
+	int begin = src->get_pos();
+	src->next(); // if reaches end?
+	if (src->peek() == L';') { // peek to EOF in stdin?
+		while (!src->is_end() && src->peek() != L'\n') { //
+			src->next();
+		}
+		return nullptr;
+	}
+	else {
+		return new token_symbol {token_symbol::type::SEMICOLON, begin, src->get_pos()};
+	}
+}
