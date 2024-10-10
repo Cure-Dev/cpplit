@@ -43,25 +43,6 @@ private:
 
 };
 
-class invalid_character : public lex_error {
-public:
-	invalid_character(std::wstring filepath, position pos, wchar_t ch) : lex_error(filepath, pos), Char(ch) {};
-	wchar_t Char;
-
-	std::wstring body(language L) {
-		std::wstringstream result;
-
-		if (L == language::zh_cn) {
-			result << L"错误：无效字符 ‘" << this->Char << L"’（U+" << number_convert::to_hex(this->Char) << L"）";
-		}
-		else {
-			result << "error: invalid character '" << this->Char << "' (U+" << number_convert::to_hex(this->Char) << L")";
-		}
-
-		return result.str();
-	}
-};
-
 // undefined symbol
 
 class unterminated_comments : public lex_error {

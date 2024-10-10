@@ -1,6 +1,7 @@
 #pragma once
 
 #include "language.hpp"
+#include <string>
 
 class lexical_error {
 public:
@@ -42,5 +43,15 @@ namespace lexical_errors {
 				return L"lexical error: unterminated comments";
 			}
 		}
+
+	};
+
+	class invalid_character : public lexical_point_error {
+	public:
+		invalid_character(int pos, wchar_t ch);
+
+		std::wstring info(language lang);
+	private:
+		wchar_t ch;
 	};
 };

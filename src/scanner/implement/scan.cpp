@@ -14,6 +14,7 @@
 #include "scan_ignore.hpp"
 
 // #include "position.hpp"
+#include "exceptions/lexical_errors.hpp"
 
 #include <functional>
 std::vector<std::pair<std::function<bool(wchar_t)>, std::function<token*(char_stream*)>>> first_set = {
@@ -47,7 +48,7 @@ token_list scan(char_stream* src) {
 		}
 
 		if (!processed) {
-			throw "invalid character";
+			throw new lexical_errors::invalid_character { src->get_pos(), src->peek() };
 		}
 
 	}
