@@ -1,5 +1,5 @@
 #include "check.hpp"
-#include "exceptions/syntax_errors.hpp"
+#include "exceptions/expect_symbol.hpp"
 
 // check_token.cpp
 

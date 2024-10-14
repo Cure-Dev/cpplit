@@ -1,4 +1,4 @@
-#include "exceptions/syntax_errors.hpp"
+#include "exceptions/expect_symbol.hpp"
 
 #include "parse_suffix.hpp"
 #include "parse_expression.hpp"

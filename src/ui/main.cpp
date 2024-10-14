@@ -86,13 +86,13 @@ token_list ui_scan(char_stream* Char_stream, input_device* device, losh& command
     return result;
 }
 
-#include "exceptions/syntax_errors.hpp" //
+#include "exceptions/syntax_error.hpp" //
 node* ui_parse(token_list Token_list, input_device* device, losh& command) {
     try {
         return parse_exe(Token_list);
     }
-    catch (syntax_error* e) {
-        std::wcerr << device->get_point_info(e->get_pos(), language::en_us) << std::endl << e->msg(language::en_us) << std::endl;
+    catch (syntax_point_error* e) {
+        std::wcerr << device->get_point_info(e->get_pos(), language::en_us) << std::endl << e->info(language::en_us) << std::endl;
         exit(1);
     }
 }
